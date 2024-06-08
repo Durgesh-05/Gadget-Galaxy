@@ -62,11 +62,6 @@ const merchantSchema = new mongoose.Schema(
         message: "Invalid Mobile Number",
       },
     },
-    roles: {
-      type: String,
-      enum: ["MERCHANT", "ADMIN"],
-      default: "MERCHANT",
-    },
     address: [addressSchema],
   },
   { timestamps: true }

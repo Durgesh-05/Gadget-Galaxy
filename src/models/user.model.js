@@ -57,11 +57,6 @@ const userSchema = new mongoose.Schema(
         message: "Invalid Mobile Number",
       },
     },
-    roles: {
-      type: String,
-      enum: ["USER", "ADMIN"],
-      default: "USER",
-    },
     address: [addressSchema],
   },
   { timestamps: true }

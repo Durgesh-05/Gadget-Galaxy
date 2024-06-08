@@ -51,13 +51,18 @@ const userSchema = new mongoose.Schema(
     },
     mobileNumber: {
       type: String,
-      required: true,
       validate: {
         validator: validatePhoneNumber,
         message: "Invalid Mobile Number",
       },
     },
     address: [addressSchema],
+    isVerified: {
+      type: String,
+      enum: ["VERIFIED","PENDING"],
+      default: "PENDING",
+      required: true
+    },
   },
   { timestamps: true }
 );

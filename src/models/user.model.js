@@ -1,32 +1,25 @@
 import mongoose from "mongoose";
-import { validatePhoneNumber } from "../utils/utils.js";
 // const addressSchema = new mongoose.Schema({
 //   apartment: {
 //     type: String,
-//     required: true,
 //   },
 //   locality: {
 //     type: String,
-//     required: true,
 //   },
 //   landmark: {
 //     type: String,
 //   },
 //   pincode: {
 //     type: String,
-//     required: true,
 //   },
 //   city: {
 //     type: String,
-//     required: true,
 //   },
 //   district: {
 //     type: String,
-//     required: true,
 //   },
 //   state: {
 //     type: String,
-//     required: true,
 //   },
 // });
 
@@ -49,20 +42,13 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    mobileNumber: {
-      type: String,
-      validate: {
-        validator: validatePhoneNumber,
-        message: "Invalid Mobile Number",
-      },
-    },
     // address: [addressSchema],
     address: {
-      type: String
+      type: String,
     },
     isVerified: {
       type: String,
-      enum: ["VERIFIED","PENDING"],
+      enum: ["VERIFIED", "PENDING"],
       default: "PENDING",
       required: true
     },

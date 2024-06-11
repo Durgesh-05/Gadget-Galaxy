@@ -5,7 +5,9 @@ const feedbackSchema = new mongoose.Schema({
     type: String,
   },
   rating: {
-    type: String,
+    type: Number,
+    min: 0,
+    max: 5
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
@@ -31,23 +33,21 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    manufacturedBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Merchant",
-    },
-    productFeedback: [feedbackSchema],
-    productType: {
-      type: String,
-      enum: [
-        "TV",
-        "SmartPhone",
-        "Home Appliances",
-        "Computing Devices",
-        "Tablets",
-        "Watches",
-      ],
+    price: {
+      type: Number,
       required: true,
     },
+    manufacturedBy: {
+      type: String,
+      required: true,
+    },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
+    },
+    productFeedback: [feedbackSchema],
+
   },
   { timestamps: true }
 );

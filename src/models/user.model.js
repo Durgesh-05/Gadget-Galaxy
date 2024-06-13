@@ -50,11 +50,10 @@ const userSchema = new mongoose.Schema(
       enum: ["USER", "ADMIN"],
       default: "USER",
     },
-    isVerified: {
+    verification: {
       type: String,
       enum: ["VERIFIED", "PENDING"],
       default: "PENDING",
-      required: true
     },
     emailVerificationToken: {
       type: String,

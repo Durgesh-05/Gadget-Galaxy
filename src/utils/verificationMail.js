@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import Mailgen from "mailgen";
 
-const sendEmail = async (fullName, email, link) => {
+const sendEmailForVerification = async (fullName, email, link) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -44,14 +44,9 @@ const sendEmail = async (fullName, email, link) => {
     html: emailBody,
     text: emailText
   };
-
-  try {
-    await transporter.sendMail(mailOptions);
-    console.log("Email Sent Successfully");
-  } catch (error) {
-    console.log("Failed to send Email, ERROR: ", error);
-  }
+  await transporter.sendMail(mailOptions);
+  console.log("Email Sent Successfully");
 };
 
 
-export { sendEmail };
+export { sendEmailForVerification };

@@ -1,20 +1,5 @@
 import mongoose from "mongoose";
 
-const feedbackSchema = new mongoose.Schema({
-  content: {
-    type: String,
-  },
-  rating: {
-    type: Number,
-    min: 0,
-    max: 5
-  },
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
-});
-
 const productSchema = new mongoose.Schema(
   {
     productName: {
@@ -46,7 +31,6 @@ const productSchema = new mongoose.Schema(
       ref: "Category",
       required: true,
     },
-    productFeedback: [feedbackSchema],
 
   },
   { timestamps: true }

@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 // const addressSchema = new mongoose.Schema({
 //   apartment: {
 //     type: String,
@@ -47,13 +47,13 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       required: true,
-      enum: ["USER", "ADMIN"],
-      default: "USER",
+      enum: ['USER', 'ADMIN'],
+      default: 'USER',
     },
     verification: {
       type: String,
-      enum: ["VERIFIED", "PENDING"],
-      default: "PENDING",
+      enum: ['VERIFIED', 'PENDING'],
+      default: 'PENDING',
     },
     emailVerificationToken: {
       type: String,
@@ -66,14 +66,14 @@ const userSchema = new mongoose.Schema(
     },
     resetPasswordExpiry: {
       type: Date,
-    }
+    },
   },
   { timestamps: true }
 );
 
-userSchema.pre("save", async function (next) {
+userSchema.pre('save', async function (next) {
   try {
-    if (!this.isModified("password")) return next();
+    if (!this.isModified('password')) return next();
     this.password = await bcrypt.hash(this.password, 10);
     next();
   } catch (error) {
@@ -85,4 +85,4 @@ userSchema.methods.comparePassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
-export const User = mongoose.model("User", userSchema);
+export const User = mongoose.model('User', userSchema);

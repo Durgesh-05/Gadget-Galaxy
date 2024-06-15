@@ -1,18 +1,21 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const categorySchema = new mongoose.Schema({
-  name: {
-    type: String,
-    enum: [
-      "TV",
-      "SmartPhone",
-      "Home Appliances",
-      "Computing Devices",
-      "Tablets",
-      "Watches",
-    ],
-    required: true,
+const categorySchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      enum: [
+        'TV',
+        'SmartPhone',
+        'Home Appliances',
+        'Computing Devices',
+        'Tablets',
+        'Watches',
+      ],
+      required: true,
+    },
   },
-}, { timestamps: true });
+  { timestamps: true }
+);
 
-export const Category = mongoose.model("Category", categorySchema);
+export const Category = mongoose.model('Category', categorySchema);

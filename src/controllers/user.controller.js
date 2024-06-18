@@ -88,6 +88,7 @@ const handleUserRegistration = asyncHandler(async (req, res) => {
         )
       );
   } catch (error) {
+    console.error('User Registration failed ERROR: ', error);
     return res
       .status(500)
       .json(
@@ -211,6 +212,7 @@ const handleResendVerificationEmail = asyncHandler(async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, null, 'Email Verification Link Sent'));
   } catch (error) {
+    console.error('Failed to send Link ERROR: ', error);
     return res
       .status(500)
       .json(
@@ -253,6 +255,7 @@ const handleResetPasswordRequest = asyncHandler(async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, null, 'Email Verification Link Sent'));
   } catch (error) {
+    console.error('Reset password Email Failed ERROR: ', error);
     return res
       .status(500)
       .json(

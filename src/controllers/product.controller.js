@@ -37,7 +37,7 @@ const handleAddProduct = asyncHandler(async (req, res) => {
         price,
         manufacturedBy,
         category,
-      ].some((field) => field.trim() === '' || !field)
+      ].some((field) => !field)
     ) {
       return res
         .status(400)

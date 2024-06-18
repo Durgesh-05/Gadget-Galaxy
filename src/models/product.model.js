@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema(
   {
@@ -27,13 +27,19 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
+      type: String,
+      enum: [
+        'TV',
+        'SmartPhone',
+        'Home Appliances',
+        'Computing Devices',
+        'Tablets',
+        'Watches',
+      ],
       required: true,
     },
-
   },
   { timestamps: true }
 );
 
-export const Product = mongoose.model("Product", productSchema);
+export const Product = mongoose.model('Product', productSchema);

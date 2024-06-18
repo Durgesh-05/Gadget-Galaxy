@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 
 const verifyRoles = (roles = []) =>
   asyncHandler(async (req, res, next) => {
-    if (roles.contains(req.user.role)) {
+    if (roles.includes(req.user.role)) {
       return next();
     } else {
       return res
@@ -14,7 +14,7 @@ const verifyRoles = (roles = []) =>
     }
   });
 
-const vaildateToken = asyncHandler(async (req, res, next) => {
+const validateToken = asyncHandler(async (req, res, next) => {
   const token = req.cookies['accessToken'];
   if (!token) {
     return res
@@ -58,4 +58,4 @@ const vaildateToken = asyncHandler(async (req, res, next) => {
   }
 });
 
-export { vaildateToken, verifyRoles };
+export { validateToken, verifyRoles };

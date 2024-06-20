@@ -26,9 +26,9 @@ const sendEmailForResetPassword = async (
   const emailFormat = {
     body: {
       name: fullName,
-      intro: `Welcome to Gadget-Galaxy! We\'re very excited to have you on board. This is the Reset Password Token: ${resetPasswordToken}`,
+      intro: `Reset Password Mail. If this is not you please Report. This is the Reset Password Token: ${resetPasswordToken}`,
       action: {
-        instructions: 'To get started with Gadget-Galaxy, please click here:',
+        instructions: 'To reset your password, please click here:',
         button: {
           color: '#22BC66',
           text: 'Verify your account',

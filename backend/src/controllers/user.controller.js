@@ -55,12 +55,11 @@ const handleUserRegistration = asyncHandler(async (req, res) => {
         )
       );
   }
-  const hashedPassword = await bcrypt.hash(password, 10);
   const emailVerificationToken = crypto.randomBytes(32).toString('hex');
   const user = await User.create({
     fullName,
     email,
-    password: hashedPassword,
+    password,
     emailVerificationToken,
     emailVerificationExpiry: Date.now() + 24 * 60 * 60 * 1000,
   });
@@ -103,7 +102,7 @@ const handleUserRegistration = asyncHandler(async (req, res) => {
 
 const handleUserLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-
+  
   if (!(email && password)) {
     return res
       .status(400)
@@ -139,7 +138,6 @@ const handleUserLogin = asyncHandler(async (req, res) => {
   const cookieOptions = {
     secure: true,
     httpOnly: true,
-    sameSite: 'strict',
   };
 
   res.cookie('accessToken', accessToken, cookieOptions);

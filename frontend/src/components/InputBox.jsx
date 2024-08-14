@@ -16,7 +16,7 @@ export const InputBox = ({ text, placeholder, label, value, setValue }) => {
         required
         value={value}
         className='border border-gray-300 rounded-md w-full py-1 px-1 placeholder:px-1 placeholder:text-xs text-xs'
-        onChange={() => setValue(event.target.value)}
+        onChange={(event) => setValue(event.target.value)}
       />
     </div>
   );

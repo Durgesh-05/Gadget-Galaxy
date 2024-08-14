@@ -23,7 +23,13 @@ export const SignupPage = ({ heading, text, btnText }) => {
       })
       .then((res) => {
         toast.success(res.data.message);
-        setTimeout(() => navigate('/auth/login'), 1000);
+        setTimeout(
+          () =>
+            navigate('/auth/login', {
+              replace: true,
+            }),
+          1000
+        );
       })
       .catch((e) => {
         toast.error(e.message);

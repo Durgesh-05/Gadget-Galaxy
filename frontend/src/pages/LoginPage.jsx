@@ -15,12 +15,24 @@ export const LoginPage = ({ heading, text, btnText }) => {
     event.preventDefault();
     setIsLoading(true);
     try {
-      const res = await axios.post(`${url}/api/v1/user/signin`, {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `${url}/api/v1/user/signin`,
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       toast.success(res.data.message);
-      setTimeout(() => navigate('/'), 1000);
+      setTimeout(
+        () =>
+          navigate('/', {
+            replace: true,
+          }),
+        1000
+      );
     } catch (e) {
       toast.error(e.response ? e.response.data.message : e.message);
       console.error('Failed to Login Error: ', e);

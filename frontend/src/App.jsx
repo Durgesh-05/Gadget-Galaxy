@@ -4,13 +4,11 @@ import { Routes, Route } from 'react-router-dom';
 import { LoginPage } from './pages/LoginPage';
 import { SignupPage } from './pages/SignupPage';
 import { NotFoundPage } from './pages/NotFoundPage';
-import { Header } from './components/Header';
-import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
 
 function App() {
   return (
-    <div className='bg-white'>
+    <div className='bg-white p-0 m-0 box-border h-screen'>
       <Routes>
         <Route
           path='/auth/signup'
@@ -28,16 +26,7 @@ function App() {
             <LoginPage heading='Login' text='Welcome back!' btnText='Login' />
           }
         />
-        <Route
-          path='/'
-          element={
-            <>
-              <Header />
-              <HomePage />
-              <Footer />
-            </>
-          }
-        />
+        <Route path='/' element={<HomePage />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </div>

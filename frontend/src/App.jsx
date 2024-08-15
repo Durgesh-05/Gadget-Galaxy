@@ -4,6 +4,9 @@ import { Routes, Route } from 'react-router-dom';
 import { LoginPage } from './pages/LoginPage';
 import { SignupPage } from './pages/SignupPage';
 import { NotFoundPage } from './pages/NotFoundPage';
+import { Header } from './components/Header';
+import { Footer } from './components/Footer';
+import { HomePage } from './pages/HomePage';
 
 function App() {
   return (
@@ -28,7 +31,11 @@ function App() {
         <Route
           path='/'
           element={
-            <h1 className='text-3xl font-bold underline'>Hello world!</h1>
+            <>
+              <Header />
+              <HomePage />
+              <Footer />
+            </>
           }
         />
         <Route path='*' element={<NotFoundPage />} />

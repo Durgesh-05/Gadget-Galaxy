@@ -4,7 +4,9 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { Feedback } from '../models/productFeedback.model.js';
 
 const handleFetchProducts = asyncHandler(async (req, res) => {
-  const allProducts = await Product.find({});
+  const allProducts = await Product.find({}).select(
+    'productName _id price category productImageURL'
+  );
   return res
     .status(200)
     .json(

@@ -8,19 +8,19 @@ export const Header = () => {
     setDropDownOpen(!dropdownOpen);
   };
   return (
-    <header className='bg-gray-950 text-gray-50 font-inter py-4 px-10 flex items-center justify-between top-0 left-0 right-0'>
+    <header className='bg-gray-950 text-gray-50 font-inter py-4 px-4 flex items-center justify-between top-0 left-0 right-0'>
       <Link to='/' className='text-2xl font-bold'>
         Gadget-Galaxy
       </Link>
       <div className='flex items-center justify-center gap-4'>
         <Link
           to='/products'
-          className='hover:text-gray-400 text-xs font-semibold'
+          className='hover:text-gray-400 text-sm font-semibold lg:text-xs'
         >
           Products
         </Link>
         <Link to='/cart'>
-          <FaShoppingCart className='text-xs hover:text-gray-400' />
+          <FaShoppingCart className='text-sm hover:text-gray-400 lg:text-xs' />
         </Link>
         <div className='relative'>
           <button

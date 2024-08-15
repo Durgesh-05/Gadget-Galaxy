@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Heading } from '../components/Heading';
 import { Card } from '../components/Card';
+import { ProductContext } from '../context/ProductContext';
 
 export const HomePage = () => {
-  // UseEffect code to fetch Category and Product details
+  const { productData, category } = useContext(ProductContext);
+  const [isCategory, setIsCategory] = useState(false);
   return (
     <div className='font-inter'>
       <Header />
@@ -17,7 +19,7 @@ export const HomePage = () => {
         >
           <div
             id='content'
-            className='flex flex-col gap-4 max-w-md text-center lg:text-left lg:gap-6'
+            className='flex flex-col gap-4 max-w-md  lg:text-left lg:gap-6'
           >
             <Heading
               text={'Discover the Latest Tech Gadgets'}
@@ -33,7 +35,7 @@ export const HomePage = () => {
           </div>
           <div id='image' className='w-full max-w-xs lg:max-w-sm'>
             <img
-              src='https://generated.vusercontent.net/placeholder.svg'
+              src='https://img.freepik.com/premium-photo/order-online-shopping-customer-with-gift-mobile-pay-with-credit-card-isolated-white-background_1262710-35753.jpg?ga=GA1.1.1950963813.1721542835&semt=ais_hybrid'
               alt='image'
               className='w-full h-auto rounded-lg'
             />
@@ -42,31 +44,23 @@ export const HomePage = () => {
 
         {/* Category Section */}
         <div className='flex flex-col text-center mb-12'>
-          <Heading text='Featured Category' size={2} />
+          <Heading text='Featured Category' className='text-2xl' />
           <div
             id='cards'
             className='flex flex-wrap justify-center items-center gap-10 mt-4'
           >
-            <Card
-              imgSrc='https://generated.vusercontent.net/placeholder.svg'
-              title='Laptops'
-              content='Discover the latest laptops for work, play, and everything in between.'
-            />
-            <Card
-              imgSrc='https://generated.vusercontent.net/placeholder.svg'
-              title='Laptops'
-              content='Discover the latest laptops for work, play, and everything in between.'
-            />
-            <Card
-              imgSrc='https://generated.vusercontent.net/placeholder.svg'
-              title='Laptops'
-              content='Discover the latest laptops for work, play, and everything in between.'
-            />
-            <Card
-              imgSrc='https://generated.vusercontent.net/placeholder.svg'
-              title='Laptops'
-              content='Discover the latest laptops for work, play, and everything in between.'
-            />
+            {Object.keys(category).map((data) => {
+              return (
+                <Card
+                  title={data}
+                  content={category[data].description}
+                  imgSrc={category[data].imageUrl}
+                  isBtn={false}
+                  isCategory={true}
+                  key={data}
+                />
+              );
+            })}
           </div>
         </div>
 
@@ -79,26 +73,18 @@ export const HomePage = () => {
               id='cards'
               className='flex flex-wrap justify-center items-center gap-10 mt-4 mb-8'
             >
-              <Card
-                imgSrc='https://generated.vusercontent.net/placeholder.svg'
-                title='Laptops'
-                content='Discover the latest laptops for work, play, and everything in between.'
-              />
-              <Card
-                imgSrc='https://generated.vusercontent.net/placeholder.svg'
-                title='Laptops'
-                content='Discover the latest laptops for work, play, and everything in between.'
-              />
-              <Card
-                imgSrc='https://generated.vusercontent.net/placeholder.svg'
-                title='Laptops'
-                content='Discover the latest laptops for work, play, and everything in between.'
-              />
-              <Card
-                imgSrc='https://generated.vusercontent.net/placeholder.svg'
-                title='Laptops'
-                content='Discover the latest laptops for work, play, and everything in between.'
-              />
+              {productData.slice(0, 6).map((data) => {
+                return (
+                  <Card
+                    title={data.productName}
+                    price={data.price}
+                    imgSrc={data.productImageURL}
+                    key={data._id}
+                    productId={data._id}
+                    isBtn={true}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>

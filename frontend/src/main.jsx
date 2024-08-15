@@ -6,12 +6,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import { ProductContextProvider } from './context/ProductContext.jsx';
+import { CartContextProvider } from './context/CartContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <ProductContextProvider>
-      <App />
-    </ProductContextProvider>
+    <CartContextProvider>
+      <ProductContextProvider>
+        <App />
+      </ProductContextProvider>
+    </CartContextProvider>
     <ToastContainer />
   </BrowserRouter>
 );

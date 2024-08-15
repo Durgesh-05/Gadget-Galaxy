@@ -1,9 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
+import { CartContext } from '../context/CartContext';
 
 export const Header = () => {
   const [dropdownOpen, setDropDownOpen] = useState(false);
+  const { productInCart } = useContext(CartContext);
+  const [productCountInCart, setproductCountInCart] = useState(0);
+  useEffect(() => {
+    const totalCount = productInCart.reduce(
+      (accm, curr) => accm + curr.count,
+      0
+    );
+    setproductCountInCart(totalCount);
+  }, [productInCart]);
+  console.log(productCountInCart);
+
   const toggleDropdown = () => {
     setDropDownOpen(!dropdownOpen);
   };
@@ -23,15 +35,22 @@ export const Header = () => {
         >
           Products
         </NavLink>
-        <NavLink to='/cart'>
-          <FaShoppingCart
-            className={({ isActive }) =>
-              `text-sm hover:text-gray-400 lg:text-xs ${
-                isActive ? 'text-gray-400' : ''
-              }`
-            }
-          />
-        </NavLink>
+        <div className='relative'>
+          <NavLink to='/cart'>
+            <FaShoppingCart
+              className={({ isActive }) =>
+                `text-sm hover:text-gray-400 lg:text-xs ${
+                  isActive ? 'text-gray-400' : ''
+                }`
+              }
+            />
+          </NavLink>
+          {productCountInCart > 0 && (
+            <span className='absolute top-[-10px] right-[-7px] bg-black text-white text-[7px] rounded-full p-[2px]'>
+              {productCountInCart}
+            </span>
+          )}
+        </div>
         <div className='relative'>
           <button
             onClick={toggleDropdown}

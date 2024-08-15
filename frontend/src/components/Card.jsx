@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { CartContext } from '../context/CartContext';
 
 export const Card = ({
   imgSrc,
@@ -9,6 +10,32 @@ export const Card = ({
   isCategory,
   content,
 }) => {
+  const { productInCart, setProductInCart } = useContext(CartContext);
+  const clickHandler = () => {
+    const cartObject = {
+      productId,
+      productName: title,
+      productImage: imgSrc,
+      productPrice: price,
+      count: 1,
+    };
+    setProductInCart((prevCartData) => {
+      const existingProductIndex = prevCartData.findIndex(
+        (data) => data.productId === productId
+      );
+
+      if (existingProductIndex !== -1) {
+        // Product exist
+        const cartToUpdate = [...prevCartData];
+        cartToUpdate[existingProductIndex].count += 1;
+        return cartToUpdate;
+      } else {
+        // New Product
+        return [...prevCartData, cartObject];
+      }
+    });
+    console.log(productInCart);
+  };
   return isCategory ? (
     <div className='w-60 bg-gray-50 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-transform duration-300 transform hover:scale-105 md:h-80 md:w-80 p-4 flex flex-col justify-between hover:cursor-pointer'>
       <img src={imgSrc} alt='image' className='w-full h-32 object-contain' />
@@ -19,19 +46,21 @@ export const Card = ({
       </div>
     </div>
   ) : (
-    <Link to={`/product/${productId}`} className='block'>
-      <div className='w-60 bg-gray-50 rounded-lg shadow-lg overflow-hidden hover:shadow-xl md:h-80 md:w-80 p-4 flex flex-col justify-between transition-transform duration-300 transform hover:scale-105 hover:cursor-pointer'>
+    <div className='w-60 bg-gray-50 rounded-lg shadow-lg overflow-hidden hover:shadow-xl md:h-80 md:w-80 p-4 flex flex-col justify-between transition-transform duration-300 transform hover:scale-105 hover:cursor-pointer'>
+      <Link to={`/product/${productId}`} className='block'>
         <img src={imgSrc} alt='image' className='w-full h-32 object-contain' />
-
-        <div id='content'>
-          <p className='text-sm font-bold text-gray-900 mb-2'>{title}</p>
-          <p className='text-gray-600 text-sm mb-4'>Price: ${price}</p>
-        </div>
-
-        <button className='w-full rounded-md bg-black text-white py-2 px-3 text-sm font-semibold hover:bg-gray-900 '>
-          Add to cart
-        </button>
+      </Link>
+      <div id='content'>
+        <p className='text-sm font-bold text-gray-900 mb-2'>{title}</p>
+        <p className='text-gray-600 text-sm mb-4'>Price: ${price}</p>
       </div>
-    </Link>
+
+      <button
+        className='w-full rounded-md bg-black text-white py-2 px-3 text-sm font-semibold hover:bg-gray-900 '
+        onClick={clickHandler}
+      >
+        Add to cart
+      </button>
+    </div>
   );
 };

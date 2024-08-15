@@ -3,6 +3,7 @@ import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { LoginPage } from './pages/LoginPage';
 import { SignupPage } from './pages/SignupPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <h1 className='text-3xl font-bold underline'>Hello world!</h1>
           }
         />
+        <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </div>
   );

@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { InputBox } from '../components/InputBox';
 import axios from 'axios';
 import { url } from '../baseUrl';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 export const LoginPage = ({ heading, text, btnText }) => {
   const navigate = useNavigate();
+  const { setUserData, setIsLoggedIn } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -25,7 +27,12 @@ export const LoginPage = ({ heading, text, btnText }) => {
           withCredentials: true,
         }
       );
-      toast.success(res.data.message);
+      const { data } = res.data;
+      setUserData({ ...data });
+      setIsLoggedIn(true);
+      toast.success(`Welcome ${data.name} to Gadget Galaxy`, {
+        autoClose: 3000,
+      });
       setTimeout(
         () =>
           navigate('/', {
@@ -34,7 +41,9 @@ export const LoginPage = ({ heading, text, btnText }) => {
         1000
       );
     } catch (e) {
-      toast.error(e.response ? e.response.data.message : e.message);
+      toast.error(e.response ? e.response.data.message : e.message, {
+        autoClose: 3000,
+      });
       console.error('Failed to Login Error: ', e);
     } finally {
       setIsLoading(false);

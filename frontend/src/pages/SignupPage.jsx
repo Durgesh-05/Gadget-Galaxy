@@ -14,30 +14,35 @@ export const SignupPage = ({ heading, text, btnText }) => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    setIsLoading((prev) => !prev);
-    await axios
-      .post(`${url}/api/v1/user/signup`, {
-        fullName,
-        email,
-        password,
-      })
-      .then((res) => {
-        toast.success(res.data.message);
-        setTimeout(
-          () =>
-            navigate('/auth/login', {
-              replace: true,
-            }),
-          1000
-        );
-      })
-      .catch((e) => {
-        toast.error(e.message);
-        console.error('Failed to Signup Error: ', e);
-      })
-      .finally(() => {
-        setIsLoading((prev) => !prev);
+    setIsLoading(true);
+    try {
+      const res = await axios.post(
+        `${url}/api/v1/user/signup`,
+        {
+          fullName,
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      toast.success(res.data.message, { autoClose: 3000 });
+      setTimeout(
+        () =>
+          navigate('/auth/login', {
+            replace: true,
+          }),
+        1000
+      );
+    } catch (e) {
+      toast.error(e.response ? e.response.data.message : e.message, {
+        autoClose: 3000,
       });
+      console.error('Failed to Login Error: ', e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

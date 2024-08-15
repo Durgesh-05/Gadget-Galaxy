@@ -2,9 +2,6 @@ import nodemailer from 'nodemailer';
 import Mailgen from 'mailgen';
 
 const sendEmailForVerification = async (fullName, email, link) => {
-  console.log(process.env.USER_EMAIL);
-  console.log(process.env.PASSWORD);
-
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {

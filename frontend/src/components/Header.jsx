@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
 
 export const Header = () => {
@@ -8,20 +8,30 @@ export const Header = () => {
     setDropDownOpen(!dropdownOpen);
   };
   return (
-    <header className='bg-gray-950 text-gray-50 font-inter py-4 px-4 flex items-center justify-between top-0 left-0 right-0'>
-      <Link to='/' className='text-2xl font-bold'>
+    <header className='bg-gray-950 text-gray-50 font-inter py-4 px-4 flex items-center justify-between top-0 left-0 right-0 fixed z-20'>
+      <NavLink to='/' className='text-2xl font-bold'>
         Gadget-Galaxy
-      </Link>
+      </NavLink>
       <div className='flex items-center justify-center gap-4'>
-        <Link
+        <NavLink
           to='/products'
-          className='hover:text-gray-400 text-sm font-semibold lg:text-xs'
+          className={({ isActive }) =>
+            `hover:text-gray-400 text-sm font-semibold lg:text-xs ${
+              isActive ? 'text-gray-400' : ''
+            }`
+          }
         >
           Products
-        </Link>
-        <Link to='/cart'>
-          <FaShoppingCart className='text-sm hover:text-gray-400 lg:text-xs' />
-        </Link>
+        </NavLink>
+        <NavLink to='/cart'>
+          <FaShoppingCart
+            className={({ isActive }) =>
+              `text-sm hover:text-gray-400 lg:text-xs ${
+                isActive ? 'text-gray-400' : ''
+              }`
+            }
+          />
+        </NavLink>
         <div className='relative'>
           <button
             onClick={toggleDropdown}
@@ -38,18 +48,18 @@ export const Header = () => {
               <div className='p-2'>
                 <div className='px-4 py-2 font-semibold'>My Account</div>
                 <hr />
-                <Link
+                <NavLink
                   to='/profile'
                   className='block px-4 py-2 hover:bg-gray-100'
                 >
                   Profile
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                   to='/orders'
                   className='block px-4 py-2 hover:bg-gray-100'
                 >
                   Orders
-                </Link>
+                </NavLink>
                 <hr />
                 <button className='w-full text-left px-4 py-2 hover:bg-gray-100'>
                   Logout

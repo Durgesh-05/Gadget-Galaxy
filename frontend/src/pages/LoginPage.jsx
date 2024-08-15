@@ -4,11 +4,9 @@ import axios from 'axios';
 import { url } from '../baseUrl';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
 
 export const LoginPage = ({ heading, text, btnText }) => {
   const navigate = useNavigate();
-  const { setUserData, setIsLoggedIn } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -28,8 +26,6 @@ export const LoginPage = ({ heading, text, btnText }) => {
         }
       );
       const { data } = res.data;
-      setUserData({ ...data });
-      setIsLoggedIn(true);
       toast.success(`Welcome ${data.name} to Gadget Galaxy`, {
         autoClose: 3000,
       });

@@ -11,7 +11,7 @@ export const HomePage = () => {
   return (
     <div className='font-inter'>
       <Header />
-      <main className='min-h-screen'>
+      <main className='min-h-screen pt-16'>
         {/* Intro Section */}
         <div
           id='intro-section'
@@ -81,7 +81,6 @@ export const HomePage = () => {
                     imgSrc={data.productImageURL}
                     key={data._id}
                     productId={data._id}
-                    isBtn={true}
                   />
                 );
               })}

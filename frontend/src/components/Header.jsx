@@ -14,7 +14,7 @@ export const Header = () => {
     );
     setproductCountInCart(totalCount);
   }, [productInCart]);
-  console.log(productCountInCart);
+  // console.log(productCountInCart);
 
   const toggleDropdown = () => {
     setDropDownOpen(!dropdownOpen);

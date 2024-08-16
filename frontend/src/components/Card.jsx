@@ -51,12 +51,12 @@ export const Card = ({
     <div className='w-60 bg-gray-50 rounded-lg shadow-lg overflow-hidden hover:shadow-xl md:h-80 md:w-80 p-4 flex flex-col justify-between transition-transform duration-300 transform hover:scale-105 hover:cursor-pointer'>
       <Link to={`/product/${productId}`} className='block'>
         <img src={imgSrc} alt='image' className='w-full h-32 object-contain' />
-      </Link>
-      <div id='content'>
-        <p className='text-sm font-bold text-gray-900 mb-2'>{title}</p>
-        <p className='text-gray-600 text-sm mb-4'>Price: ${price}</p>
-      </div>
 
+        <div id='content'>
+          <p className='text-sm font-bold text-gray-900 mb-2'>{title}</p>
+          <p className='text-gray-600 text-sm mb-4'>Price: ${price}</p>
+        </div>
+      </Link>
       <button
         className='w-full rounded-md bg-black text-white py-2 px-3 text-sm font-semibold hover:bg-gray-900 '
         onClick={clickHandler}

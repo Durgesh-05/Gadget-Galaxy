@@ -20,7 +20,7 @@ export const NotFoundPage = () => {
   );
 };
 
-function FrownIcon(props) {
+export function FrownIcon(props) {
   return (
     <svg
       {...props}

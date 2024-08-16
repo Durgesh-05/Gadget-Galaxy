@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
+import { toast } from 'react-toastify';
 
 export const Card = ({
   imgSrc,
@@ -34,6 +35,7 @@ export const Card = ({
         return [...prevCartData, cartObject];
       }
     });
+    toast.success('Product is added to Cart', { autoClose: 1000 });
     console.log(productInCart);
   };
   return isCategory ? (

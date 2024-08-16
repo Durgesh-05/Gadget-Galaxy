@@ -4,6 +4,7 @@ import { Footer } from '../components/Footer';
 import { Heading } from '../components/Heading';
 import { Card } from '../components/Card';
 import { ProductContext } from '../context/ProductContext';
+import { Link } from 'react-router-dom';
 
 export const HomePage = () => {
   const { productData, category } = useContext(ProductContext);
@@ -29,9 +30,11 @@ export const HomePage = () => {
               Explore our curated collection of cutting-edge tech products for
               your home, office, and on-the-go needs.
             </p>
-            <button className='rounded-md bg-black text-white py-3 px-6 w-fit text-xs font-semibold'>
-              Shop Now
-            </button>
+            <Link to='/products'>
+              <button className='rounded-md bg-black text-white py-3 px-6 w-fit text-xs font-semibold'>
+                Shop Now
+              </button>
+            </Link>
           </div>
           <div id='image' className='w-full max-w-xs lg:max-w-sm'>
             <img

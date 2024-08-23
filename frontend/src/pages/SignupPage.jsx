@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { InputBox } from '../components/InputBox';
 import axios from 'axios';
-import { url } from '../baseUrl';
+import { url } from '../constants';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 

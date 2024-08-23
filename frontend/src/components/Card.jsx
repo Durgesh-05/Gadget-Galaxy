@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import { toast } from 'react-toastify';
-import { initCartObject } from '../constants';
 
 export const Card = ({
   imgSrc,
@@ -12,10 +11,30 @@ export const Card = ({
   isCategory,
   content,
 }) => {
-  const { productInCart, addToCart } = useContext(CartContext);
+  const { productInCart, setProductInCart } = useContext(CartContext);
   const clickHandler = () => {
-    const cartObject = initCartObject(productId, title, imgSrc, price);
-    addToCart(cartObject);
+    const cartObject = {
+      productId,
+      productName: title,
+      productImage: imgSrc,
+      productPrice: price,
+      count: 1,
+    };
+    setProductInCart((prevCartData) => {
+      const existingProductIndex = prevCartData.findIndex(
+        (data) => data.productId === productId
+      );
+
+      if (existingProductIndex !== -1) {
+        // Product exist
+        const cartToUpdate = [...prevCartData];
+        cartToUpdate[existingProductIndex].count += 1;
+        return cartToUpdate;
+      } else {
+        // New Product
+        return [...prevCartData, cartObject];
+      }
+    });
     toast.success('Product is added to Cart', { autoClose: 1000 });
     console.log(productInCart);
   };

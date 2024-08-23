@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 
 export const HomePage = () => {
   const { productData, category } = useContext(ProductContext);
-  const [isCategory, setIsCategory] = useState(false);
   return (
     <div className='font-inter'>
       <Header />

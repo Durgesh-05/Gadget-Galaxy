@@ -1,61 +1,67 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Heading } from '../components/Heading';
 import { CiSquarePlus, CiSquareMinus } from 'react-icons/ci';
 import { CartContext } from '../context/CartContext';
+import { FrownIcon } from './NotFoundPage';
 
 export const CartPage = () => {
-  const { productInCart, setProductInCart } = useContext(CartContext);
+  const { productInCart, incrementHandler, decrementHandler } =
+    useContext(CartContext);
 
-  const incrementHandler = (productId) => {
-    setProductInCart((prevCartData) => {
-      const updatedCart = prevCartData.map((product) =>
-        product.productId === productId
-          ? { ...product, count: product.count + 1 }
-          : product
-      );
-      return updatedCart;
-    });
-  };
-  const decrementHandler = () => {
-    console.log('btn clicked');
-  };
   return (
     <div className='font-inter'>
       <Header />
-      <main className='min-h-screen pt-16'>
-        <div>
-          <Heading text='Your Cart' className='text-2xl px-4 mt-4' />
-          <div id='cards' className='grid grid-cols-3 gap-4 px-6'>
-            {productInCart.length > 1
-              ? productInCart.map(
-                  ({
-                    productName,
-                    count,
-                    productPrice,
-                    productImage,
-                    productId,
-                  }) => {
-                    if (productName === '') return;
-                    return (
-                      <CartCard
-                        key={productId}
-                        productImage={productImage}
-                        productName={productName}
-                        count={count}
-                        price={productPrice}
-                        productId={productId}
-                        incrementHandler={incrementHandler}
-                        decrementHandler={decrementHandler}
-                      />
-                    );
-                  }
-                )
-              : ''}
+      {productInCart.length > 1 ? (
+        <main className='min-h-screen pt-16'>
+          <div>
+            <Heading text='Your Cart' className='text-2xl px-4 mt-4' />
+            <div id='cards' className='grid grid-cols-3 gap-4 px-6'>
+              {productInCart.map(
+                ({
+                  productName,
+                  count,
+                  productPrice,
+                  productImage,
+                  productId,
+                }) => {
+                  if (productName === '') return;
+                  return (
+                    <CartCard
+                      key={productId}
+                      productImage={productImage}
+                      productName={productName}
+                      count={count}
+                      price={productPrice}
+                      productId={productId}
+                      incrementHandler={() => incrementHandler(productId)}
+                      decrementHandler={() => decrementHandler(productId)}
+                    />
+                  );
+                }
+              )}
+              {/* ):""} */}
+            </div>
           </div>
+        </main>
+      ) : (
+        <div className='flex flex-col items-center justify-center min-h-screen gap-6 px-4 md:px-6 font-inter'>
+          <FrownIcon className='h-20 w-20 text-gray-500 dark:text-gray-400' />
+          <h1 className='text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl'>
+            Products Not Added Yet
+          </h1>
+
+          <Link
+            to='/products'
+            className='inline-flex h-10 items-center justify-center rounded-md bg-black px-6 text-sm font-medium text-white shadow transition-colors hover:bg-gray-800 focus:outline-none focus:ring-1 focus:ring-gray-900'
+          >
+            Go to Product Page to add Products
+          </Link>
         </div>
-      </main>
+      )}
+
       <Footer />
     </div>
   );

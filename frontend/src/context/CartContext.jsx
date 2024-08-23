@@ -42,11 +42,30 @@ export function CartContextProvider({ children }) {
     });
   };
 
+  const addToCart = (cartObject) => {
+    setProductInCart((prevCartData) => {
+      const indexOfProduct = prevCartData.findIndex(
+        (product) => product.productId === cartObject.productId
+      );
+
+      if (indexOfProduct !== -1) {
+        // Product exist
+        const cartToUpdate = [...prevCartData];
+        cartToUpdate[indexOfProduct].count += 1;
+        return cartToUpdate;
+      } else {
+        // New Product
+        return [...prevCartData, cartObject];
+      }
+    });
+  };
+
   const value = {
     productInCart,
     setProductInCart,
     incrementHandler,
     decrementHandler,
+    addToCart,
   };
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

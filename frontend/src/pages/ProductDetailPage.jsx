@@ -1,19 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Heading } from '../components/Heading';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { url } from '../baseUrl';
+import { toast } from 'react-toastify';
+import { url } from '../constants';
+import { CartContext } from '../context/CartContext';
+import { initCartObject } from '../constants';
 
 export const ProductDetailPage = () => {
   const [productDetail, setProductDetail] = useState({});
   const [review, setReview] = useState('');
   const { id } = useParams();
+  const { addToCart } = useContext(CartContext);
 
   const submitHandler = (e) => {
     e.preventDefault();
     // Fetch user name id and make a post request
+  };
+
+  const clickHandler = () => {
+    const { _id, productName, productImageURL, price } = productDetail;
+    const cartObject = initCartObject(_id, productName, productImageURL, price);
+    addToCart(cartObject);
+    toast.success('Product is added to Cart', { autoClose: 1000 });
+    console.log(productInCart);
+    console.log('hello');
   };
 
   useEffect(() => {
@@ -68,7 +81,10 @@ export const ProductDetailPage = () => {
               )}
             </div>
             <div id='btns' className='flex gap-3'>
-              <button className='rounded-md bg-black text-white py-3 px-6 text-xs font-semibold'>
+              <button
+                className='rounded-md bg-black text-white py-3 px-6 text-xs font-semibold'
+                onClick={clickHandler}
+              >
                 Add to Cart
               </button>
               <button className='rounded-md bg-black text-white py-3 px-6 text-xs font-semibold'>

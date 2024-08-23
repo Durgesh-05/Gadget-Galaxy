@@ -7,7 +7,7 @@ const handleGetUserProfile = asyncHandler(async (req, res) => {
 
   try {
     const user = await User.findById(_id).select(
-      ' -password -address -emailVerificationToken -emailVerificationExpiry -resetPasswordToken -resetPasswordExpiry'
+      '-password -emailVerificationToken -emailVerificationExpiry -resetPasswordToken -resetPasswordExpiry'
     );
 
     return res

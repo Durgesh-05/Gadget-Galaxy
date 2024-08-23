@@ -12,7 +12,7 @@ export const ProductsPage = () => {
     <div className='font-inter'>
       <Header />
       {productData.length > 0 ? (
-        <main className='min-h-screen grid grid-cols-1 place-items-center gap-6 my-4 pt-16 lg:grid lg:grid-cols-3 lg:gap-4'>
+        <main className='min-h-screen grid grid-cols-1 place-items-center  gap-6 my-4 py-16 lg:grid lg:grid-cols-4 lg:gap-4 lg:gap-y-2 px-16'>
           {productData.map((data) => {
             return (
               <Card

@@ -50,7 +50,7 @@ export const HomePage = () => {
           <Heading text='Featured Category' className='text-2xl' />
           <div
             id='cards'
-            className='flex flex-wrap justify-center items-center gap-10 mt-4'
+            className='flex  justify-center items-center gap-10 mt-4'
           >
             {Object.keys(category).map((data) => {
               return (
@@ -76,7 +76,7 @@ export const HomePage = () => {
               id='cards'
               className='flex flex-wrap justify-center items-center gap-10 mt-4 mb-8'
             >
-              {productData.slice(0, 6).map((data) => {
+              {productData.slice(0, 10).map((data) => {
                 return (
                   <Card
                     title={data.productName}

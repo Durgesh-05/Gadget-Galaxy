@@ -8,41 +8,84 @@ import { CartContext } from '../context/CartContext';
 import { FrownIcon } from './NotFoundPage';
 
 export const CartPage = () => {
-  const { productInCart, incrementHandler, decrementHandler } =
+  const { productInCart, incrementHandler, decrementHandler, removeFromCart } =
     useContext(CartContext);
+
+  const subtotal = productInCart.reduce(
+    (total, product) => total + product.productPrice * product.count,
+    0
+  );
+  const shipping = 10.0;
+  const discount = (subtotal * 20) / 100; // 20% fixed Discount
+  const total = subtotal + shipping - discount;
 
   return (
     <div className='font-inter'>
       <Header />
       {productInCart.length > 1 ? (
         <main className='min-h-screen pt-16'>
-          <div>
-            <Heading text='Your Cart' className='text-2xl px-4 mt-4' />
-            <div id='cards' className='grid grid-cols-3 gap-4 px-6'>
-              {productInCart.map(
-                ({
-                  productName,
-                  count,
-                  productPrice,
-                  productImage,
-                  productId,
-                }) => {
-                  if (productName === '') return;
-                  return (
-                    <CartCard
-                      key={productId}
-                      productImage={productImage}
-                      productName={productName}
-                      count={count}
-                      price={productPrice}
-                      productId={productId}
-                      incrementHandler={() => incrementHandler(productId)}
-                      decrementHandler={() => decrementHandler(productId)}
-                    />
-                  );
-                }
-              )}
-              {/* ):""} */}
+          <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 px-6'>
+            <div className='lg:col-span-2'>
+              <div
+                id='cards'
+                className='grid grid-cols-1 md:grid-cols-2 gap-4 mt-12'
+              >
+                {productInCart.map(
+                  ({
+                    productName,
+                    count,
+                    productPrice,
+                    productImage,
+                    productId,
+                  }) => {
+                    if (productName === '') return;
+                    return (
+                      <CartCard
+                        key={productId}
+                        productImage={productImage}
+                        productName={productName}
+                        count={count}
+                        price={productPrice}
+                        productId={productId}
+                        incrementHandler={() => incrementHandler(productId)}
+                        decrementHandler={() => decrementHandler(productId)}
+                        removeFromCart={() => removeFromCart(productId)}
+                      />
+                    );
+                  }
+                )}
+              </div>
+            </div>
+            <div className='lg:col-span-1 mt-12'>
+              <div className='bg-gray-100 p-6 rounded-lg'>
+                <h2 className='text-xl font-bold mb-4'>Order Summary</h2>
+                <div className='grid gap-4'>
+                  <div className='flex items-center justify-between'>
+                    <div className='text-gray-950 font-semibold'>Subtotal</div>
+                    <div className='font-medium'>${subtotal.toFixed(2)}</div>
+                  </div>
+                  <div className='flex items-center justify-between'>
+                    <div className='text-gray-950 font-semibold'>Shipping</div>
+                    <div className='font-medium'>${shipping.toFixed(2)}</div>
+                  </div>
+                  <div className='flex items-center justify-between'>
+                    <div className='text-gray-950 font-semibold'>
+                      Discount: 20%
+                    </div>
+                    <div className='font-medium text-green-600'>
+                      - ${discount.toFixed(2)}
+                    </div>
+                  </div>
+                  <div className='border-t border-gray-200 my-4'></div>
+                  <div className='flex items-center justify-between'>
+                    <div className='text-lg font-bold'>Total</div>
+                    <div className='text-lg font-bold'>${total.toFixed(2)}</div>
+                  </div>
+                </div>
+                <button className='bg-black text-white rounded-lg font-medium hover:bg-gray-900 py-3 px-6 w-full mt-4'>
+                  Proceed to Checkout
+                </button>
+              </div>
             </div>
           </div>
         </main>
@@ -72,14 +115,14 @@ const CartCard = ({
   count,
   price,
   productImage,
-  productId,
   incrementHandler,
   decrementHandler,
+  removeFromCart,
 }) => {
   return (
     <div
       id='card'
-      className='flex  justify-between items-center w-full max-w-md bg-white border border-gray-200 rounded-lg p-2 mt-4 '
+      className='flex justify-between items-center w-full bg-white border border-gray-200 rounded-lg p-4'
     >
       <div id='left' className='flex items-center gap-4'>
         <img
@@ -88,35 +131,31 @@ const CartCard = ({
           className='w-16 h-16 rounded-md object-cover'
         />
         <div className='flex flex-col gap-2'>
-          <p className='text-[10px] font-semibold text-gray-900'>
-            {productName}
-          </p>
+          <p className='text-sm font-semibold text-gray-900'>{productName}</p>
           <div id='counter' className='flex items-center gap-2'>
             <button
               className='text-gray-600 hover:text-gray-900'
-              onClick={() => decrementHandler()}
+              onClick={decrementHandler}
             >
               <CiSquareMinus size={20} />
             </button>
             <p className='text-lg font-semibold'>{count}</p>
             <button
               className='text-gray-600 hover:text-gray-900'
-              onClick={() => incrementHandler(productId)}
+              onClick={incrementHandler}
             >
               <CiSquarePlus size={20} />
             </button>
           </div>
-          <div className='flex gap-2'>
-            <button className='text-xs bg-red-200 text-red-600 hover:cursor-pointer rounded-md px-4 py-1 w-fit'>
-              Remove
-            </button>
-            <p className='border border-gray-300 bg-green-100 text-green-700 rounded-lg w-fit px-4 py-1 text-[9px] whitespace-nowrap font-semibold'>
-              In stock
-            </p>
-          </div>
+          <button
+            className='text-xs bg-red-200 text-red-600 hover:cursor-pointer rounded-md px-4 py-1 w-fit'
+            onClick={removeFromCart}
+          >
+            Remove
+          </button>
         </div>
       </div>
-      <div id='right' className='text-start'>
+      <div id='right' className='text-end'>
         <p className='text-lg font-semibold text-gray-900'>${price}</p>
       </div>
     </div>

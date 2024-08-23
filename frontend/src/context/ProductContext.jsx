@@ -6,7 +6,7 @@ import React, {
   useCallback,
 } from 'react';
 import axios from 'axios';
-import { url } from '../baseUrl';
+import { url } from '../constants';
 
 export const ProductContext = createContext();
 

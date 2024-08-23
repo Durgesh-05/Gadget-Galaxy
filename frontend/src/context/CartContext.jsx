@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, useEffect } from 'react';
 
 export const CartContext = createContext();
 
@@ -12,6 +12,17 @@ export function CartContextProvider({ children }) {
       productPrice: 0,
     },
   ]);
+
+  useEffect(() => {
+    const savedCart = JSON.parse(localStorage.getItem('cartItems'));
+    if (savedCart) {
+      setProductInCart(savedCart);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(productInCart));
+  }, [productInCart]);
 
   const incrementHandler = (productId) => {
     setProductInCart((prevCartData) => {
@@ -60,12 +71,26 @@ export function CartContextProvider({ children }) {
     });
   };
 
+  const removeFromCart = (productId) => {
+    setProductInCart((prevCartData) => {
+      const cartData = [...prevCartData];
+      const indexOfProduct = cartData.findIndex(
+        (product) => product.productId === productId
+      );
+      if (indexOfProduct !== -1) {
+        cartData.splice(indexOfProduct, 1);
+      }
+      return cartData;
+    });
+  };
+
   const value = {
     productInCart,
     setProductInCart,
     incrementHandler,
     decrementHandler,
     addToCart,
+    removeFromCart,
   };
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

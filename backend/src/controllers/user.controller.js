@@ -102,7 +102,7 @@ const handleUserRegistration = asyncHandler(async (req, res) => {
 
 const handleUserLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  
+
   if (!(email && password)) {
     return res
       .status(400)
@@ -317,6 +317,21 @@ const handleResetPassword = asyncHandler(async (req, res) => {
   );
 });
 
+const handleUserAuthState = asyncHandler(async (req, res) => {
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(200, { user: req.user }, 'Auth State Fetch SuccessFully')
+    );
+});
+
+const handleUserLogout = asyncHandler(async (req, res) => {
+  res.clearCookie('accessToken');
+  return res
+    .status(200)
+    .json(new ApiResponse(200, null, 'User Logged Out SuccessFully'));
+});
+
 export {
   handleUserRegistration,
   handleUserLogin,
@@ -324,4 +339,6 @@ export {
   handleResendVerificationEmail,
   handleResetPasswordRequest,
   handleResetPassword,
+  handleUserAuthState,
+  handleUserLogout,
 };

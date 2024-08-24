@@ -2,11 +2,32 @@ import React, { useState, useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
 import { CartContext } from '../context/CartContext';
+import axios from 'axios';
+import { url } from '../constants';
+import { AuthContext } from '../context/AuthContext';
 
 export const Header = () => {
   const [dropdownOpen, setDropDownOpen] = useState(false);
   const { productInCart } = useContext(CartContext);
   const [productCountInCart, setproductCountInCart] = useState(0);
+  const { setIsAuthenticated, setUser, setIsLoggedIn } =
+    useContext(AuthContext);
+
+  const handleUserLogout = async () => {
+    try {
+      const res = await axios.get(`${url}/api/v1/user/logout`, {
+        withCredentials: true,
+      });
+      if (res.status === 200) {
+        setIsAuthenticated(false);
+        setUser({});
+        setIsLoggedIn(false);
+      }
+    } catch (e) {
+      console.error('Failed to Logout User ', e);
+    }
+  };
+
   useEffect(() => {
     const totalCount = productInCart.reduce(
       (accm, curr) => accm + curr.count,
@@ -80,7 +101,10 @@ export const Header = () => {
                   Orders
                 </NavLink>
                 <hr />
-                <button className='w-full text-left px-4 py-2 hover:bg-gray-100'>
+                <button
+                  className='w-full text-left px-4 py-2 hover:bg-gray-100'
+                  onClick={handleUserLogout}
+                >
                   Logout
                 </button>
               </div>

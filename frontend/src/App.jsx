@@ -9,13 +9,15 @@ import { ProductsPage } from './pages/ProductsPage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
 import { CartPage } from './pages/CartPage';
 import { ProfilePage } from './pages/ProfilePage';
+import { ProtectedRoute } from './components/ProtectedRoute';
 
 function App() {
   return (
     <div className='bg-white p-0 m-0 box-border h-screen'>
       <Routes>
+        {/* Public Routes */}
         <Route
-          path='/auth/signup'
+          path='/signup'
           element={
             <SignupPage
               heading='Sign Up'
@@ -25,7 +27,7 @@ function App() {
           }
         />
         <Route
-          path='/auth/login'
+          path='/login'
           element={
             <LoginPage heading='Login' text='Welcome back!' btnText='Login' />
           }
@@ -33,9 +35,12 @@ function App() {
         <Route path='/' element={<HomePage />} />
         <Route path='/products' element={<ProductsPage />} />
         <Route path='/product/:id' element={<ProductDetailPage />} />
-        <Route path='/cart' element={<CartPage />} />
-        <Route path='/profile' element={<ProfilePage />} />
         <Route path='*' element={<NotFoundPage />} />
+        {/* Protected Routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route path='/cart' element={<CartPage />} />
+          <Route path='/profile' element={<ProfilePage />} />
+        </Route>
       </Routes>
     </div>
   );

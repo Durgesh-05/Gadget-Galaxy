@@ -3,7 +3,7 @@ import { InputBox } from '../components/InputBox';
 import axios from 'axios';
 import { url } from '../constants';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 export const SignupPage = ({ heading, text, btnText }) => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export const SignupPage = ({ heading, text, btnText }) => {
       toast.success(res.data.message, { autoClose: 3000 });
       setTimeout(
         () =>
-          navigate('/auth/login', {
+          navigate('/login', {
             replace: true,
           }),
         1000
@@ -39,7 +39,7 @@ export const SignupPage = ({ heading, text, btnText }) => {
       toast.error(e.response ? e.response.data.message : e.message, {
         autoClose: 3000,
       });
-      console.error('Failed to Login Error: ', e);
+      console.error('Failed to Signup Error: ', e);
     } finally {
       setIsLoading(false);
     }
@@ -49,7 +49,7 @@ export const SignupPage = ({ heading, text, btnText }) => {
     <div className='w-screen h-screen flex justify-center items-center'>
       <div
         id='signup-card'
-        className='px-6 py-8 border-gray-400 w-fit shadow-xl bg-white flex flex-col  justify-center gap-6 font-inter'
+        className='px-6 py-8 border-gray-400 w-fit shadow-xl bg-white flex flex-col justify-center gap-6 font-inter'
       >
         <div id='content'>
           <h1 className='text-black font-bold text-center text-2xl'>
@@ -58,7 +58,7 @@ export const SignupPage = ({ heading, text, btnText }) => {
           <p className='text-gray-400 text-xs text-center'>{text}</p>
         </div>
         <form
-          className='flex flex-col  justify-center gap-3'
+          className='flex flex-col justify-center gap-3'
           onSubmit={submitHandler}
         >
           <InputBox
@@ -88,6 +88,14 @@ export const SignupPage = ({ heading, text, btnText }) => {
           >
             {isLoading ? 'Loading...' : btnText}
           </button>
+          <div className='text-center'>
+            <Link
+              to='/login'
+              className='text-black font-medium text-xs hover:underline'
+            >
+              Already Registered? Login
+            </Link>
+          </div>
         </form>
       </div>
     </div>

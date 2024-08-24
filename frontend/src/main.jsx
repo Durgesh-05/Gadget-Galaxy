@@ -7,14 +7,17 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import { ProductContextProvider } from './context/ProductContext.jsx';
 import { CartContextProvider } from './context/CartContext.jsx';
+import { AuthContextProvider } from './context/AuthContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <CartContextProvider>
-      <ProductContextProvider>
-        <App />
-      </ProductContextProvider>
-    </CartContextProvider>
+    <AuthContextProvider>
+      <CartContextProvider>
+        <ProductContextProvider>
+          <App />
+        </ProductContextProvider>
+      </CartContextProvider>
+    </AuthContextProvider>
     <ToastContainer />
   </BrowserRouter>
 );

@@ -2,15 +2,15 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
-import { Heading } from '../components/Heading';
 import { CiSquarePlus, CiSquareMinus } from 'react-icons/ci';
 import { CartContext } from '../context/CartContext';
 import { FrownIcon } from './NotFoundPage';
-import { getStockOfProduct } from '../utils';
+import { ProductContext } from '../context/ProductContext';
 
 export const CartPage = () => {
   const { productInCart, incrementHandler, decrementHandler, removeFromCart } =
     useContext(CartContext);
+  const { productData } = useContext(ProductContext);
 
   const subtotal = productInCart.reduce(
     (total, product) => total + product.productPrice * product.count,
@@ -19,6 +19,16 @@ export const CartPage = () => {
   const shipping = 10.0;
   const discount = (subtotal * 20) / 100; // 20% fixed Discount
   const total = subtotal + shipping - discount;
+
+  const getStockOfProduct = (productId) => {
+    const [productToFind] = productData.filter(
+      (product) => product._id === productId
+    );
+    if (productToFind) {
+      return productToFind.stock;
+    }
+    return -1;
+  };
 
   return (
     <div className='font-inter'>

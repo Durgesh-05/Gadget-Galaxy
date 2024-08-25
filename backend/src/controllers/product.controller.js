@@ -5,7 +5,7 @@ import { Feedback } from '../models/productFeedback.model.js';
 
 const handleFetchProducts = asyncHandler(async (req, res) => {
   const allProducts = await Product.find({}).select(
-    'productName _id price category productImageURL'
+    'productName _id price category productImageURL stock'
   );
   return res
     .status(200)

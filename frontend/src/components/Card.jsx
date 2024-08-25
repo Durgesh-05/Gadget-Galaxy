@@ -12,12 +12,11 @@ export const Card = ({
   isCategory,
   content,
 }) => {
-  const { productInCart, addToCart } = useContext(CartContext);
+  const { addToCart } = useContext(CartContext);
   const clickHandler = () => {
     const cartObject = initCartObject(productId, title, imgSrc, price);
     addToCart(cartObject);
     toast.success('Product is added to Cart', { autoClose: 1000 });
-    console.log(productInCart);
   };
   return isCategory ? (
     <div className='w-60 bg-gray-50 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-transform duration-300 transform hover:scale-105 md:h-80 md:w-80 p-4 flex flex-col justify-between hover:cursor-pointer'>

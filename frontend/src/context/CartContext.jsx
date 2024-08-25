@@ -1,5 +1,4 @@
 import React, { useState, createContext, useEffect } from 'react';
-
 export const CartContext = createContext();
 
 export function CartContextProvider({ children }) {
@@ -24,11 +23,17 @@ export function CartContextProvider({ children }) {
     localStorage.setItem('cartItems', JSON.stringify(productInCart));
   }, [productInCart]);
 
-  const incrementHandler = (productId) => {
+  const incrementHandler = (productId, stockCount) => {
     setProductInCart((prevCartData) => {
       return prevCartData.map((product) =>
         product.productId === productId
-          ? { ...product, count: product.count + 1 }
+          ? {
+              ...product,
+              count:
+                product.count === stockCount
+                  ? product.count
+                  : product.count + 1,
+            }
           : product
       );
     });

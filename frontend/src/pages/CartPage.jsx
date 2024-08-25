@@ -6,6 +6,7 @@ import { Heading } from '../components/Heading';
 import { CiSquarePlus, CiSquareMinus } from 'react-icons/ci';
 import { CartContext } from '../context/CartContext';
 import { FrownIcon } from './NotFoundPage';
+import { getStockOfProduct } from '../utils';
 
 export const CartPage = () => {
   const { productInCart, incrementHandler, decrementHandler, removeFromCart } =
@@ -39,6 +40,7 @@ export const CartPage = () => {
                     productId,
                   }) => {
                     if (productName === '') return;
+                    const stockCount = getStockOfProduct(productId);
                     return (
                       <CartCard
                         key={productId}
@@ -47,7 +49,9 @@ export const CartPage = () => {
                         count={count}
                         price={productPrice}
                         productId={productId}
-                        incrementHandler={() => incrementHandler(productId)}
+                        incrementHandler={() =>
+                          incrementHandler(productId, stockCount)
+                        }
                         decrementHandler={() => decrementHandler(productId)}
                         removeFromCart={() => removeFromCart(productId)}
                       />

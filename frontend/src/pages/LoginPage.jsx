@@ -1,17 +1,15 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { InputBox } from '../components/InputBox';
 import axios from 'axios';
 import { url } from '../constants';
 import { toast } from 'react-toastify';
 import { useNavigate, Link } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
 
 export const LoginPage = ({ heading, text, btnText }) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { setIsLoggedIn } = useContext(AuthContext);
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -27,18 +25,13 @@ export const LoginPage = ({ heading, text, btnText }) => {
           withCredentials: true,
         }
       );
-      setIsLoggedIn(true);
       const { data } = res.data;
       toast.success(`Welcome ${data.name} to Gadget Galaxy`, {
         autoClose: 3000,
       });
-      setTimeout(
-        () =>
-          navigate('/', {
-            replace: true,
-          }),
-        1000
-      );
+      navigate('/', {
+        replace: true,
+      });
     } catch (e) {
       toast.error(e.response ? e.response.data.message : e.message, {
         autoClose: 3000,

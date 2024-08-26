@@ -4,24 +4,20 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { CartContext } from '../context/CartContext';
 import axios from 'axios';
 import { url } from '../constants';
-import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export const Header = () => {
   const [dropdownOpen, setDropDownOpen] = useState(false);
   const { productInCart } = useContext(CartContext);
   const [productCountInCart, setproductCountInCart] = useState(0);
-  const { setIsAuthenticated, setUser, setIsLoggedIn } =
-    useContext(AuthContext);
-
+  const navigate = useNavigate();
   const handleUserLogout = async () => {
     try {
       const res = await axios.get(`${url}/api/v1/user/logout`, {
         withCredentials: true,
       });
       if (res.status === 200) {
-        setIsAuthenticated(false);
-        setUser({});
-        setIsLoggedIn(false);
+        navigate('/login');
       }
     } catch (e) {
       console.error('Failed to Logout User ', e);

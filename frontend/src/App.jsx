@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { LoginPage } from './pages/LoginPage';
 import { SignupPage } from './pages/SignupPage';
 import { NotFoundPage } from './pages/NotFoundPage';
@@ -9,7 +8,6 @@ import { ProductsPage } from './pages/ProductsPage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
 import { CartPage } from './pages/CartPage';
 import { ProfilePage } from './pages/ProfilePage';
-import { ProtectedRoute } from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -37,10 +35,9 @@ function App() {
         <Route path='/product/:id' element={<ProductDetailPage />} />
         <Route path='*' element={<NotFoundPage />} />
         {/* Protected Routes */}
-        <Route element={<ProtectedRoute />}>
-          <Route path='/cart' element={<CartPage />} />
-          <Route path='/profile' element={<ProfilePage />} />
-        </Route>
+
+        <Route path='/cart' element={<CartPage />} />
+        <Route path='/profile' element={<ProfilePage />} />
       </Routes>
     </div>
   );

@@ -8,6 +8,7 @@ import { ProductsPage } from './pages/ProductsPage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
 import { CartPage } from './pages/CartPage';
 import { ProfilePage } from './pages/ProfilePage';
+import { ProtectedRoutes } from './components/ProtectedRoutes';
 
 function App() {
   return (
@@ -36,8 +37,10 @@ function App() {
         <Route path='*' element={<NotFoundPage />} />
         {/* Protected Routes */}
 
-        <Route path='/cart' element={<CartPage />} />
-        <Route path='/profile' element={<ProfilePage />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route path='/cart' element={<CartPage />} />
+          <Route path='/profile' element={<ProfilePage />} />
+        </Route>
       </Routes>
     </div>
   );

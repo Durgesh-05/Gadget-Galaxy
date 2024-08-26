@@ -317,14 +317,6 @@ const handleResetPassword = asyncHandler(async (req, res) => {
   );
 });
 
-const handleUserAuthState = asyncHandler(async (req, res) => {
-  return res
-    .status(200)
-    .json(
-      new ApiResponse(200, { user: req.user }, 'Auth State Fetch SuccessFully')
-    );
-});
-
 const handleUserLogout = asyncHandler(async (req, res) => {
   res.clearCookie('accessToken');
   res.clearCookie('refreshToken');
@@ -340,6 +332,5 @@ export {
   handleResendVerificationEmail,
   handleResetPasswordRequest,
   handleResetPassword,
-  handleUserAuthState,
   handleUserLogout,
 };

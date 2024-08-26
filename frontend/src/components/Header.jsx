@@ -5,10 +5,12 @@ import { CartContext } from '../context/CartContext';
 import axios from 'axios';
 import { url } from '../constants';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export const Header = () => {
   const [dropdownOpen, setDropDownOpen] = useState(false);
   const { productInCart } = useContext(CartContext);
+  const { logout, isAuthenticated } = useAuth();
   const [productCountInCart, setproductCountInCart] = useState(0);
   const navigate = useNavigate();
   const handleUserLogout = async () => {
@@ -17,6 +19,7 @@ export const Header = () => {
         withCredentials: true,
       });
       if (res.status === 200) {
+        logout();
         navigate('/login');
       }
     } catch (e) {
@@ -64,49 +67,51 @@ export const Header = () => {
           </NavLink>
           {productCountInCart > 0 && (
             <span className='absolute top-[-10px] right-[-7px] bg-black text-white text-[7px] rounded-full p-[2px]'>
-              {productCountInCart}
+              {isAuthenticated() && productCountInCart}
             </span>
           )}
         </div>
-        <div className='relative'>
-          <button
-            onClick={toggleDropdown}
-            className='rounded-full focus:outline-none'
-          >
-            <img
-              src='https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?size=626&ext=jpg&ga=GA1.1.1950963813.1721542835&semt=ais_hybrid'
-              // alt='User Avatar'
-              className='rounded-full bg-cover w-5 h-5'
-            />
-          </button>
-          {dropdownOpen && (
-            <div className='absolute right-0 mt-2 w-48 bg-white text-black border border-gray-300 rounded-md shadow-lg'>
-              <div className='p-2'>
-                <div className='px-4 py-2 font-semibold'>My Account</div>
-                <hr />
-                <NavLink
-                  to='/profile'
-                  className='block px-4 py-2 hover:bg-gray-100'
-                >
-                  Profile
-                </NavLink>
-                <NavLink
-                  to='/orders'
-                  className='block px-4 py-2 hover:bg-gray-100'
-                >
-                  Orders
-                </NavLink>
-                <hr />
-                <button
-                  className='w-full text-left px-4 py-2 hover:bg-gray-100'
-                  onClick={handleUserLogout}
-                >
-                  Logout
-                </button>
+        {isAuthenticated() && (
+          <div className='relative'>
+            <button
+              onClick={toggleDropdown}
+              className='rounded-full focus:outline-none'
+            >
+              <img
+                src='https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?size=626&ext=jpg&ga=GA1.1.1950963813.1721542835&semt=ais_hybrid'
+                // alt='User Avatar'
+                className='rounded-full bg-cover w-5 h-5'
+              />
+            </button>
+            {dropdownOpen && (
+              <div className='absolute right-0 mt-2 w-48 bg-white text-black border border-gray-300 rounded-md shadow-lg'>
+                <div className='p-2'>
+                  <div className='px-4 py-2 font-semibold'>My Account</div>
+                  <hr />
+                  <NavLink
+                    to='/profile'
+                    className='block px-4 py-2 hover:bg-gray-100'
+                  >
+                    Profile
+                  </NavLink>
+                  <NavLink
+                    to='/orders'
+                    className='block px-4 py-2 hover:bg-gray-100'
+                  >
+                    Orders
+                  </NavLink>
+                  <hr />
+                  <button
+                    className='w-full text-left px-4 py-2 hover:bg-gray-100'
+                    onClick={handleUserLogout}
+                  >
+                    Logout
+                  </button>
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </div>
     </header>
   );

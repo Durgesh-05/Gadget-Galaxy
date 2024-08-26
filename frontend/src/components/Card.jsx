@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import { toast } from 'react-toastify';
 import { initCartObject } from '../constants';
+import { useAuth } from '../context/AuthContext';
 
 export const Card = ({
   imgSrc,
@@ -13,7 +14,10 @@ export const Card = ({
   content,
 }) => {
   const { addToCart } = useContext(CartContext);
+  const { isAuthenticated } = useAuth();
   const clickHandler = () => {
+    if (!isAuthenticated())
+      return toast.error('Authentication Required', { autoClose: 1000 });
     const cartObject = initCartObject(productId, title, imgSrc, price);
     addToCart(cartObject);
     toast.success('Product is added to Cart', { autoClose: 1000 });

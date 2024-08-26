@@ -8,11 +8,13 @@ import { toast } from 'react-toastify';
 import { url } from '../constants';
 import { CartContext } from '../context/CartContext';
 import { initCartObject } from '../constants';
+import { useAuth } from '../context/AuthContext';
 
 export const ProductDetailPage = () => {
   const [productDetail, setProductDetail] = useState({});
   const [review, setReview] = useState('');
   const { id } = useParams();
+  const { isAuthenticated } = useAuth();
   const { addToCart } = useContext(CartContext);
 
   const submitHandler = (e) => {
@@ -22,6 +24,8 @@ export const ProductDetailPage = () => {
 
   const clickHandler = () => {
     const { _id, productName, productImageURL, price } = productDetail;
+    if (!isAuthenticated())
+      return toast.error('Authentication Required', { autoClose: 1000 });
     const cartObject = initCartObject(_id, productName, productImageURL, price);
     addToCart(cartObject);
     toast.success('Product is added to Cart', { autoClose: 1000 });
@@ -106,26 +110,28 @@ export const ProductDetailPage = () => {
             </div>
 
             {/* Feedback */}
-            <div id='reviews' className='mb-4'>
-              <form className='flex flex-col gap-2' onSubmit={submitHandler}>
-                <label htmlFor='reviewText' className='text-sm font-semibold'>
-                  Write your review
-                </label>
-                <textarea
-                  name='reviewText'
-                  id='reviewText'
-                  className='border border-gray-400 rounded-lg h-20 w-full lg:w-80 p-4 text-xs'
-                  value={review}
-                  onChange={(e) => setReview(e.target.value)}
-                ></textarea>
-                <button
-                  className='rounded-md w-full lg:w-fit bg-black text-white py-2 px-8 text-xs font-semibold'
-                  type='submit'
-                >
-                  Submit
-                </button>
-              </form>
-            </div>
+            {isAuthenticated() && (
+              <div id='reviews' className='mb-4'>
+                <form className='flex flex-col gap-2' onSubmit={submitHandler}>
+                  <label htmlFor='reviewText' className='text-sm font-semibold'>
+                    Write your review
+                  </label>
+                  <textarea
+                    name='reviewText'
+                    id='reviewText'
+                    className='border border-gray-400 rounded-lg h-20 w-full lg:w-80 p-4 text-xs'
+                    value={review}
+                    onChange={(e) => setReview(e.target.value)}
+                  ></textarea>
+                  <button
+                    className='rounded-md w-full lg:w-fit bg-black text-white py-2 px-8 text-xs font-semibold'
+                    type='submit'
+                  >
+                    Submit
+                  </button>
+                </form>
+              </div>
+            )}
           </div>
         </div>
       </main>

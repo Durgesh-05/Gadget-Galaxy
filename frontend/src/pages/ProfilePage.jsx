@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import axios from 'axios';
-import { url } from '../constants';
+import { url } from '../utils';
 import { Heading } from '../components/Heading';
 
 export const ProfilePage = () => {

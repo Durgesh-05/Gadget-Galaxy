@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { InputBox } from '../components/InputBox';
 import axios from 'axios';
-import { url } from '../constants';
+import { url } from '../utils';
 import { toast } from 'react-toastify';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
@@ -6,11 +6,13 @@ import { CiSquarePlus, CiSquareMinus } from 'react-icons/ci';
 import { CartContext } from '../context/CartContext';
 import { FrownIcon } from './NotFoundPage';
 import { ProductContext } from '../context/ProductContext';
+import { DialogBox } from '../components/Dialog';
 
 export const CartPage = () => {
   const { productInCart, incrementHandler, decrementHandler, removeFromCart } =
     useContext(CartContext);
   const { productData } = useContext(ProductContext);
+  const [isDialogOpen, setDialogOpen] = useState(false);
 
   const subtotal = productInCart.reduce(
     (total, product) => total + product.productPrice * product.count,
@@ -28,6 +30,14 @@ export const CartPage = () => {
       return productToFind.stock;
     }
     return -1;
+  };
+
+  const handleCheckOut = () => {
+    setDialogOpen(true);
+  };
+
+  const closeDialog = () => {
+    setDialogOpen(false);
   };
 
   return (
@@ -96,7 +106,10 @@ export const CartPage = () => {
                     <div className='text-lg font-bold'>${total.toFixed(2)}</div>
                   </div>
                 </div>
-                <button className='bg-black text-white rounded-lg font-medium hover:bg-gray-900 py-3 px-6 w-full mt-4'>
+                <button
+                  className='bg-black text-white rounded-lg font-medium hover:bg-gray-900 py-3 px-6 w-full mt-4'
+                  onClick={handleCheckOut}
+                >
                   Proceed to Checkout
                 </button>
               </div>
@@ -119,6 +132,7 @@ export const CartPage = () => {
         </div>
       )}
 
+      {isDialogOpen && <DialogBox onClose={closeDialog} totalAmount={total} />}
       <Footer />
     </div>
   );

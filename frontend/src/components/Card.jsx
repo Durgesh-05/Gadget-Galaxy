@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import { toast } from 'react-toastify';
-import { initCartObject } from '../constants';
+import { initCartObject } from '../utils';
 import { useAuth } from '../context/AuthContext';
 
 export const Card = ({

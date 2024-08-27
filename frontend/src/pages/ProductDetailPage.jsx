@@ -5,9 +5,9 @@ import { Heading } from '../components/Heading';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { url } from '../constants';
+import { url } from '../utils';
 import { CartContext } from '../context/CartContext';
-import { initCartObject } from '../constants';
+import { initCartObject } from '../utils';
 import { useAuth } from '../context/AuthContext';
 
 export const ProductDetailPage = () => {

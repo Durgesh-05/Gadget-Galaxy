@@ -1,16 +1,9 @@
 import React, { useState, createContext, useEffect } from 'react';
+
 export const CartContext = createContext();
 
 export function CartContextProvider({ children }) {
-  const [productInCart, setProductInCart] = useState([
-    {
-      productId: '',
-      productName: '',
-      count: 0,
-      productImage: '',
-      productPrice: 0,
-    },
-  ]);
+  const [productInCart, setProductInCart] = useState([]);
 
   useEffect(() => {
     const savedCart = JSON.parse(localStorage.getItem('cartItems'));
@@ -65,12 +58,12 @@ export function CartContextProvider({ children }) {
       );
 
       if (indexOfProduct !== -1) {
-        // Product exist
+        // Product exists
         const cartToUpdate = [...prevCartData];
         cartToUpdate[indexOfProduct].count += 1;
         return cartToUpdate;
       } else {
-        // New Product
+        // New product
         return [...prevCartData, cartObject];
       }
     });
@@ -97,5 +90,6 @@ export function CartContextProvider({ children }) {
     addToCart,
     removeFromCart,
   };
+
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

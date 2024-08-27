@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { toast } from 'react-toastify';
+
 export const url = 'http://localhost:8000';
 
 export const initCartObject = (
@@ -53,4 +56,49 @@ export const initialCategories = {
       'https://img.freepik.com/free-photo/view-3d-vr-gaming-set_23-2151005781.jpg?ga=GA1.1.1950963813.1721542835&semt=ais_hybrid',
     products: [],
   },
+};
+
+export const fetchProfileData = async () => {
+  try {
+    const res = await axios.get(`${url}/api/v1/profile`, {
+      withCredentials: true,
+    });
+    const { data } = res.data;
+    return data;
+  } catch (e) {
+    console.error('Failed to fetch profile Error: ', e);
+    return null;
+  }
+};
+
+export const handleCashOnDelivery = async (
+  productInCart,
+  totalAmount,
+  navigate
+) => {
+  const orderItem = productInCart.map((product) => {
+    const { productId, count } = product;
+    return { productId, quantity: count };
+  });
+  const orderObject = {
+    orderPrice: totalAmount,
+    orderItem,
+  };
+
+  try {
+    const profileData = await fetchProfileData();
+    if (profileData.address.trim() === '') {
+      toast.warning('Update Address Details', { autoClose: 1000 });
+    }
+    const res = await axios.post(`${url}/api/v1/order`, orderObject, {
+      withCredentials: true,
+    });
+    if (res.status === 201) {
+      toast.success('Congratulations! Order Created', { autoClose: 1000 });
+      navigate('/order');
+    }
+  } catch (e) {
+    console.error('Failed to Create Order Error ', e);
+    toast.error(e);
+  }
 };

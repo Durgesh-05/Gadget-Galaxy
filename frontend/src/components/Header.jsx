@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
 import { CartContext } from '../context/CartContext';
 import axios from 'axios';
-import { url } from '../constants';
+import { url } from '../utils';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 

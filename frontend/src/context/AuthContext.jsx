@@ -23,8 +23,8 @@ export const AuthContextProvider = ({ children }) => {
     const savedToken = JSON.parse(localStorage.getItem('token'));
     if (savedToken) {
       setToken(savedToken);
-      setIsLoading(false);
     }
+    setIsLoading(false);
   }, [token]);
 
   const isAuthenticated = () => !!token;

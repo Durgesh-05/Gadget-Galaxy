@@ -7,6 +7,9 @@ import { Heading } from '../components/Heading';
 
 export const ProfilePage = () => {
   const [userData, setUserData] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedData, setEditedData] = useState({});
+
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
@@ -14,7 +17,8 @@ export const ProfilePage = () => {
           withCredentials: true,
         });
         const { data } = res.data;
-        setUserData({ ...data });
+        setUserData(data);
+        setEditedData(data);
       } catch (e) {
         console.error('Failed to fetch profile Error: ', e);
       }
@@ -22,6 +26,31 @@ export const ProfilePage = () => {
 
     fetchProfileData();
   }, []);
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditedData({
+      ...editedData,
+      [name]: value,
+    });
+  };
+
+  const handleSaveClick = async () => {
+    try {
+      const res = await axios.patch(`${url}/api/v1/profile`, editedData, {
+        withCredentials: true,
+      });
+      setUserData(editedData);
+      setIsEditing(false);
+    } catch (e) {
+      console.error('Failed to save profile data. Error: ', e);
+    }
+  };
+
   return (
     <div className='font-inter'>
       {/* Header */}
@@ -45,7 +74,6 @@ export const ProfilePage = () => {
                   text={userData.fullName}
                   className='text-2xl font-bold text-gray-900'
                 />
-
                 <p className='text-gray-600'>{userData.email}</p>
               </div>
             </div>
@@ -53,36 +81,81 @@ export const ProfilePage = () => {
             {/* Personal Information */}
             <div className='mt-8'>
               <Heading
-                text={userData.fullName}
+                text='Personal Information'
                 className='text-xl font-semibold text-gray-800 mb-4'
               />
 
               <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                 <div>
-                  <p className='block text-sm font-medium text-gray-700'>
+                  <label className='block text-sm font-medium text-gray-700'>
                     Full Name
-                  </p>
-                  <p className='mt-1 block w-full rounded-md border-gray-300 shadow-sm'>
-                    {userData.fullName}
-                  </p>
+                  </label>
+                  <input
+                    type='text'
+                    name='fullName'
+                    value={editedData.fullName || ''}
+                    onChange={handleInputChange}
+                    disabled={!isEditing}
+                    className={
+                      isEditing
+                        ? 'mt-1 block w-full rounded-md  shadow-sm p-2 border border-black'
+                        : 'mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2'
+                    }
+                  />
                 </div>
                 <div>
-                  <p className='block text-sm font-medium text-gray-700'>
+                  <label className='block text-sm font-medium text-gray-700'>
                     Email Address
-                  </p>
-                  <p className='mt-1 block w-full rounded-md border-gray-300 shadow-sm'>
-                    {userData.email}
-                  </p>
+                  </label>
+                  <input
+                    type='email'
+                    name='email'
+                    value={editedData.email || ''}
+                    onChange={handleInputChange}
+                    disabled={!isEditing}
+                    className={
+                      isEditing
+                        ? 'mt-1 block w-full rounded-md  shadow-sm p-2 border border-black'
+                        : 'mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2'
+                    }
+                  />
                 </div>
 
                 <div>
-                  <p className='block text-sm font-medium text-gray-700'>
+                  <label className='block text-sm font-medium text-gray-700'>
                     Address
-                  </p>
-                  <p className='mt-1 block w-full rounded-md border-gray-300 shadow-sm'>
-                    {userData.address || 'Address is not added'}
-                  </p>
+                  </label>
+                  <textarea
+                    type='text'
+                    name='address'
+                    value={editedData.address || ''}
+                    onChange={handleInputChange}
+                    disabled={!isEditing}
+                    className={
+                      isEditing
+                        ? 'mt-1  w-full rounded-md  shadow-sm p-2 border border-black'
+                        : 'mt-1  w-full rounded-md border-gray-300 shadow-sm p-2'
+                    }
+                  />
                 </div>
+              </div>
+
+              <div className='mt-6 flex justify-end'>
+                {!isEditing ? (
+                  <button
+                    onClick={handleEditClick}
+                    className='px-4 py-2 bg-gray-950 text-white rounded-md hover:bg-gray-800'
+                  >
+                    Edit
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleSaveClick}
+                    className='px-4 py-2 bg-gray-950 text-white rounded-md hover:bg-gray-800'
+                  >
+                    Save
+                  </button>
+                )}
               </div>
             </div>
           </div>

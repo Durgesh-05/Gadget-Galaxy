@@ -9,6 +9,7 @@ import { ProductDetailPage } from './pages/ProductDetailPage';
 import { CartPage } from './pages/CartPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { OrderPage } from './pages/OrderPage';
+import { SuccessPage } from './pages/SuccessPage';
 import { ProtectedRoutes } from './components/ProtectedRoutes';
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path='/' element={<HomePage />} />
         <Route path='/products' element={<ProductsPage />} />
         <Route path='/product/:id' element={<ProductDetailPage />} />
+        <Route path='/success' element={<SuccessPage />} />
         <Route path='*' element={<NotFoundPage />} />
         {/* Protected Routes */}
 

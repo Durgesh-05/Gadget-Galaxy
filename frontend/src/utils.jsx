@@ -1,5 +1,8 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { loadStripe } from '@stripe/stripe-js';
+
+export const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_SECRET);
 
 export const url = 'http://localhost:8000';
 
@@ -100,5 +103,29 @@ export const handleCashOnDelivery = async (
   } catch (e) {
     console.error('Failed to Create Order Error ', e);
     toast.error(e);
+  }
+};
+
+export const handleCheckout = async (productInCart) => {
+  const products = productInCart.map((product) => {
+    const { productName, productPrice, count, productId } = product;
+    return { productName, price: productPrice, quantity: count, productId };
+  });
+  try {
+    const response = await axios.post(`${url}/api/v1/payment/session`, {
+      products,
+    });
+    const { sessionId } = response.data.data;
+
+    const stripe = await stripePromise;
+    const { error } = await stripe.redirectToCheckout({ sessionId });
+
+    if (error) {
+      toast.error('Failed to redirect to Stripe checkout');
+      console.error('Stripe checkout error:', error);
+    }
+  } catch (error) {
+    toast.error('Failed to initiate payment');
+    console.error('Checkout error:', error);
   }
 };

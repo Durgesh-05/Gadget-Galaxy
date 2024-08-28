@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { IoMdClose } from 'react-icons/io';
-import { handleCashOnDelivery } from '../utils';
+import { handleCashOnDelivery, handleCheckout } from '../utils';
 import { CartContext } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,7 +25,10 @@ export const DialogBox = ({ onClose, totalAmount }) => {
           >
             Cash on Delivery
           </button>
-          <button className='text-lg font-semibold bg-gray-950 py-3 px-5 rounded-lg text-white text-center hover:bg-gray-800 hover:cursor-pointer'>
+          <button
+            className='text-lg font-semibold bg-gray-950 py-3 px-5 rounded-lg text-white text-center hover:bg-gray-800 hover:cursor-pointer'
+            onClick={() => handleCheckout(productInCart)}
+          >
             Online Payment
           </button>
         </div>

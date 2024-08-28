@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useAuth } from './context/AuthContext';
 import { toast } from 'react-toastify';
 import { loadStripe } from '@stripe/stripe-js';
 
@@ -77,12 +78,10 @@ export const fetchProfileData = async () => {
 export const handleCashOnDelivery = async (
   productInCart,
   totalAmount,
-  navigate
+  navigate,
+  setProductInCart
 ) => {
-  const orderItem = productInCart.map((product) => {
-    const { productId, count } = product;
-    return { productId, quantity: count };
-  });
+  const orderItem = getOrderItem(productInCart);
   const orderObject = {
     orderPrice: totalAmount,
     orderItem,
@@ -98,6 +97,7 @@ export const handleCashOnDelivery = async (
     });
     if (res.status === 201) {
       toast.success('Congratulations! Order Created', { autoClose: 1000 });
+      setProductInCart([]);
       navigate('/order');
     }
   } catch (e) {
@@ -128,4 +128,22 @@ export const handleCheckout = async (productInCart) => {
     toast.error('Failed to initiate payment');
     console.error('Checkout error:', error);
   }
+};
+
+export const getTotalAmount = (productInCart) => {
+  const subtotal = productInCart.reduce(
+    (total, product) => total + product.productPrice * product.count,
+    0
+  );
+  const shipping = 10.0;
+  const discount = (subtotal * 20) / 100; // 20% fixed Discount
+  const total = subtotal + shipping - discount;
+  return total;
+};
+
+export const getOrderItem = (productInCart) => {
+  return productInCart.map((product) => {
+    const { productId, count } = product;
+    return { productId, quantity: count };
+  });
 };

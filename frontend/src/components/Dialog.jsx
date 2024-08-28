@@ -5,7 +5,7 @@ import { CartContext } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 
 export const DialogBox = ({ onClose, totalAmount }) => {
-  const { productInCart } = useContext(CartContext);
+  const { productInCart, setProductInCart } = useContext(CartContext);
   const navigate = useNavigate();
   return (
     <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
@@ -20,7 +20,12 @@ export const DialogBox = ({ onClose, totalAmount }) => {
           <button
             className='text-lg font-semibold bg-gray-950 py-3 px-5 rounded-lg text-white text-center hover:bg-gray-800 hover:cursor-pointer'
             onClick={() =>
-              handleCashOnDelivery(productInCart, totalAmount, navigate)
+              handleCashOnDelivery(
+                productInCart,
+                totalAmount,
+                navigate,
+                setProductInCart
+              )
             }
           >
             Cash on Delivery

@@ -5,7 +5,7 @@ import Stripe from 'stripe';
 const handleCreatePaymentSession = asyncHandler(async (req, res) => {
   const { products } = req.body;
   const lineItems = products.map((product) => {
-    const productPrice = product.price - (product.price * 20) / 100;
+    const productPrice = Math.round(product.price - (product.price * 20) / 100);
     return {
       price_data: {
         currency: 'inr',

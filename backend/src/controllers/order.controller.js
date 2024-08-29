@@ -6,7 +6,10 @@ const handleGetOrders = asyncHandler(async (req, res) => {
   const { _id } = req.user;
 
   try {
-    const orders = await Order.findOne({ createdBy: _id });
+    const orders = await Order.find({ createdBy: _id }).populate({
+      path: 'orderItem.productId',
+      model: 'Product',
+    });
     if (!orders) {
       return res
         .status(200)

@@ -95,7 +95,7 @@ export const Header = () => {
                     Profile
                   </NavLink>
                   <NavLink
-                    to='/orders'
+                    to='/order'
                     className='block px-4 py-2 hover:bg-gray-100'
                   >
                     Orders

@@ -43,7 +43,7 @@ export const CartPage = () => {
   return (
     <div className='font-inter'>
       <Header />
-      {productInCart.length > 1 ? (
+      {productInCart.length > 0 ? (
         <main className='min-h-screen pt-16'>
           <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 px-6'>
             <div className='lg:col-span-2'>

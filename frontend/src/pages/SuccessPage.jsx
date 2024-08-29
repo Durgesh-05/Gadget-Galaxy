@@ -14,38 +14,42 @@ export const SuccessPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('Session ID:', sessionId);
+    if (sessionId && productInCart.length > 0) {
+      console.log('Session ID:', sessionId);
+      console.log('Creating order.....');
 
-    const createOrderOnSuccess = async () => {
-      const orderItem = getOrderItem(productInCart);
-      const totalAmount = getTotalAmount(productInCart);
-      const orderObject = {
-        orderPrice: totalAmount,
-        orderItem,
-        paymentType: 'ONLINE',
-        paymentStatus: 'PAID',
+      const createOrderOnSuccess = async () => {
+        const orderItem = getOrderItem(productInCart);
+        const totalAmount = getTotalAmount(productInCart);
+        const orderObject = {
+          orderPrice: totalAmount,
+          orderItem,
+          paymentType: 'ONLINE',
+          paymentStatus: 'PAID',
+        };
+
+        try {
+          const res = await axios.post(`${url}/api/v1/order`, orderObject, {
+            withCredentials: true,
+          });
+          if (res.status === 201) {
+            console.log('Online order created');
+            console.log(res.data);
+
+            toast.success('Congratulations! Payment Success & Order Created', {
+              autoClose: 1000,
+            });
+            setProductInCart([]);
+          }
+        } catch (e) {
+          console.error('Failed to Create Order Error ', e);
+          toast.error(e.message || 'Order creation failed');
+        }
       };
 
-      try {
-        const res = await axios.post(`${url}/api/v1/order`, orderObject, {
-          withCredentials: true,
-        });
-        if (res.status === 201) {
-          toast.success('Congratulations! Payment Success & Order Created', {
-            autoClose: 1000,
-          });
-          setProductInCart([]);
-        }
-      } catch (e) {
-        console.error('Failed to Create Order Error ', e);
-        toast.error(e);
-      }
-    };
-
-    if (sessionId) {
       createOrderOnSuccess();
     }
-  }, [sessionId]);
+  }, [sessionId, productInCart]);
 
   const handleHomeClick = () => {
     navigate('/', { replace: true });

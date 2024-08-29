@@ -15,9 +15,6 @@ export const SuccessPage = () => {
 
   useEffect(() => {
     if (sessionId && productInCart.length > 0) {
-      console.log('Session ID:', sessionId);
-      console.log('Creating order.....');
-
       const createOrderOnSuccess = async () => {
         const orderItem = getOrderItem(productInCart);
         const totalAmount = getTotalAmount(productInCart);
@@ -33,9 +30,6 @@ export const SuccessPage = () => {
             withCredentials: true,
           });
           if (res.status === 201) {
-            console.log('Online order created');
-            console.log(res.data);
-
             toast.success('Congratulations! Payment Success & Order Created', {
               autoClose: 1000,
             });

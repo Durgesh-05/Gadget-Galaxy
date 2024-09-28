@@ -24,7 +24,7 @@ const handleCreatePaymentSession = asyncHandler(async (req, res) => {
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
-      success_url: `https://gadget-galaxy-woad.vercel.app/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `https://gadget-galaxy-psi.vercel.app/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `https://gadget-galaxy-mbwk.onrender.com/api/v1/payment/cancel`,
     });
 

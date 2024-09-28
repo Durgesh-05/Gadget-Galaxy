@@ -25,7 +25,7 @@ const handleCreatePaymentSession = asyncHandler(async (req, res) => {
       line_items: lineItems,
       mode: 'payment',
       success_url: `http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `http://localhost:8000/api/v1/payment/cancel`,
+      cancel_url: `https://gadget-galaxy-mbwk.onrender.com/api/v1/payment/cancel`,
     });
 
     return res

@@ -73,7 +73,7 @@ const handleUserRegistration = asyncHandler(async (req, res) => {
     verification: user.verification,
   };
 
-  const emailVerificationLink = `http://localhost:8000/api/v1/user/verification?tokenId=${emailVerificationToken}`;
+  const emailVerificationLink = `https://gadget-galaxy-mbwk.onrender.com/api/v1/user/verification?tokenId=${emailVerificationToken}`;
 
   try {
     await sendEmailForVerification(fullName, email, emailVerificationLink);
@@ -198,7 +198,7 @@ const handleResendVerificationEmail = asyncHandler(async (req, res) => {
       .json(new ApiResponse(404, null, 'User Not Registered'));
   }
 
-  const emailVerificationLink = `http://localhost:8000/api/v1/user/verification?tokenId=${user.emailVerificationToken}`;
+  const emailVerificationLink = `https://gadget-galaxy-mbwk.onrender.com/api/v1/user/verification?tokenId=${user.emailVerificationToken}`;
 
   try {
     await sendEmailForVerification(
@@ -240,7 +240,7 @@ const handleResetPasswordRequest = asyncHandler(async (req, res) => {
 
   await user.save({ validateBeforeSave: false });
 
-  const resetPasswordLink = `http://localhost:8000/api/v1/user/reset-password`;
+  const resetPasswordLink = `https://gadget-galaxy-mbwk.onrender.com/api/v1/user/reset-password`;
 
   try {
     await sendEmailForResetPassword(

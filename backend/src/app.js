@@ -10,7 +10,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: 'https://gadget-galaxy-psi.vercel.app/',
+    origin: 'https://gadget-galaxy-psi.vercel.app',
     credentials: true,
   })
 );

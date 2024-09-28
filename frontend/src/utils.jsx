@@ -5,7 +5,7 @@ import { loadStripe } from '@stripe/stripe-js';
 
 export const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_SECRET);
 
-export const url = 'http://localhost:8000';
+export const url = 'https://gadget-galaxy-mbwk.onrender.com';
 
 export const initCartObject = (
   productId,

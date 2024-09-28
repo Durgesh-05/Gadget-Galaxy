@@ -40,7 +40,7 @@ export const Header = () => {
     setDropDownOpen(!dropdownOpen);
   };
   return (
-    <header className='bg-gray-950 text-gray-50 font-inter py-4 px-4 flex items-center justify-between top-0 left-0 right-0 fixed z-20'>
+    <header className='bg-gray-950 text-gray-50 font-inter py-6 px-4 flex items-center justify-between top-0 left-0 right-0 fixed z-20'>
       <NavLink to='/' className='text-2xl font-bold'>
         Gadget-Galaxy
       </NavLink>
@@ -48,7 +48,7 @@ export const Header = () => {
         <NavLink
           to='/products'
           className={({ isActive }) =>
-            `hover:text-gray-400 text-sm font-semibold lg:text-xs ${
+            `hover:text-gray-400 text-md font-semibold  ${
               isActive ? 'text-gray-400' : ''
             }`
           }
@@ -59,9 +59,7 @@ export const Header = () => {
           <NavLink to='/cart'>
             <FaShoppingCart
               className={({ isActive }) =>
-                `text-sm hover:text-gray-400 lg:text-xs ${
-                  isActive ? 'text-gray-400' : ''
-                }`
+                `text-md hover:text-gray-400 ${isActive ? 'text-gray-400' : ''}`
               }
             />
           </NavLink>
@@ -80,7 +78,7 @@ export const Header = () => {
               <img
                 src='https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?size=626&ext=jpg&ga=GA1.1.1950963813.1721542835&semt=ais_hybrid'
                 // alt='User Avatar'
-                className='rounded-full bg-cover w-5 h-5'
+                className='rounded-full bg-cover w-6 h-6'
               />
             </button>
             {dropdownOpen && (

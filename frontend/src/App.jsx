@@ -22,7 +22,7 @@ function App() {
           element={
             <SignupPage
               heading='Sign Up'
-              text='Create an account to start using our product.'
+              text='Create an account to start shopping.'
               btnText='Sign Up'
             />
           }

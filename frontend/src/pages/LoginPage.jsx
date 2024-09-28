@@ -48,19 +48,19 @@ export const LoginPage = ({ heading, text, btnText }) => {
   };
 
   return (
-    <div className='w-screen h-screen flex justify-center items-center'>
+    <div className='w-screen h-screen flex justify-center items-center bg-gray-100'>
       <div
         id='login-card'
-        className='px-6 py-8 border-gray-400 w-fit shadow-xl bg-white flex flex-col justify-center gap-6 font-inter'
+        className='px-8 py-10 border-gray-400 w-full max-w-md shadow-xl bg-white flex flex-col justify-center gap-6 font-inter rounded-lg'
       >
         <div id='content'>
-          <h1 className='text-black font-bold text-center text-2xl'>
+          <h1 className='text-black text-center text-4xl font-extrabold md:text-3xl'>
             {heading}
           </h1>
-          <p className='text-gray-400 text-xs text-center'>{text}</p>
+          <p className='text-gray-600 text-xl text-center md:text-lg'>{text}</p>
         </div>
         <form
-          className='flex flex-col justify-center gap-3'
+          className='flex flex-col justify-center gap-4'
           onSubmit={submitHandler}
         >
           <InputBox
@@ -78,15 +78,15 @@ export const LoginPage = ({ heading, text, btnText }) => {
               value={password}
               setValue={setPassword}
             />
-            <Link
+            {/* <Link
               to='/forgot-password'
-              className=' font-medium text-black text-[10px] my-2 hover:underline'
+              className='font-medium text-black text-xs my-2 hover:underline'
             >
               Forgot Password?
-            </Link>
+            </Link> */}
           </div>
           <button
-            className='border py-2 bg-black text-white text-xs rounded-md font-semibold'
+            className='py-2 border bg-black text-white rounded-md transition duration-200 hover:bg-gray-800 md:py-3 text-lg font-bold'
             type='submit'
           >
             {isLoading ? 'Loading...' : btnText}
@@ -94,7 +94,7 @@ export const LoginPage = ({ heading, text, btnText }) => {
           <div className='text-center'>
             <Link
               to='/signup'
-              className='text-black text-xs font-medium hover:underline'
+              className='text-black font-medium text-lg hover:underline'
             >
               Not Registered? Sign Up
             </Link>

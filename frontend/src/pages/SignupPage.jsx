@@ -3,7 +3,7 @@ import { InputBox } from '../components/InputBox';
 import axios from 'axios';
 import { url } from '../utils';
 import { toast } from 'react-toastify';
-import { useNavigate, Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { useNavigate, Link } from 'react-router-dom';
 
 export const SignupPage = ({ heading, text, btnText }) => {
   const navigate = useNavigate();
@@ -28,13 +28,7 @@ export const SignupPage = ({ heading, text, btnText }) => {
         }
       );
       toast.success(res.data.message, { autoClose: 3000 });
-      setTimeout(
-        () =>
-          navigate('/login', {
-            replace: true,
-          }),
-        1000
-      );
+      setTimeout(() => navigate('/login', { replace: true }), 1000);
     } catch (e) {
       toast.error(e.response ? e.response.data.message : e.message, {
         autoClose: 3000,
@@ -46,19 +40,19 @@ export const SignupPage = ({ heading, text, btnText }) => {
   };
 
   return (
-    <div className='w-screen h-screen flex justify-center items-center'>
+    <div className='w-screen h-screen flex justify-center items-center bg-gray-100 font-inter'>
       <div
         id='signup-card'
-        className='px-6 py-8 border-gray-400 w-fit shadow-xl bg-white flex flex-col justify-center gap-6 font-inter'
+        className='px-8 py-10 border-gray-400 w-full max-w-md shadow-xl bg-white flex flex-col justify-center gap-6 rounded-lg'
       >
         <div id='content'>
-          <h1 className='text-black font-bold text-center text-2xl'>
+          <h1 className='text-black text-center text-4xl font-extrabold md:text-3xl'>
             {heading}
           </h1>
-          <p className='text-gray-400 text-xs text-center'>{text}</p>
+          <p className='text-gray-600 text-xl text-center md:text-lg'>{text}</p>
         </div>
         <form
-          className='flex flex-col justify-center gap-3'
+          className='flex flex-col justify-center gap-4'
           onSubmit={submitHandler}
         >
           <InputBox
@@ -83,7 +77,7 @@ export const SignupPage = ({ heading, text, btnText }) => {
             setValue={setPassword}
           />
           <button
-            className='border py-2 bg-black text-white text-xs rounded-md font-semibold'
+            className='py-2 border bg-black text-white rounded-md transition duration-200 hover:bg-gray-800 md:py-3 text-lg font-bold'
             type='submit'
           >
             {isLoading ? 'Loading...' : btnText}
@@ -91,7 +85,7 @@ export const SignupPage = ({ heading, text, btnText }) => {
           <div className='text-center'>
             <Link
               to='/login'
-              className='text-black font-medium text-xs hover:underline'
+              className='text-black font-medium text-lg hover:underline'
             >
               Already Registered? Login
             </Link>

@@ -15,7 +15,7 @@ export const HomePage = () => {
         {/* Intro Section */}
         <div
           id='intro-section'
-          className='bg-gray-100 flex flex-col items-center px-6 py-8 gap-8 mb-12 lg:flex-row lg:items-center lg:justify-around'
+          className='bg-gray-100 flex flex-col  px-6 py-12 gap-8 mb-12 md:flex-row md:items-center md:justify-around'
         >
           <div
             id='content'
@@ -23,19 +23,19 @@ export const HomePage = () => {
           >
             <Heading
               text={'Discover the Latest Tech Gadgets'}
-              className='text-4xl'
+              className='text-4xl lg:text-5xl lg:font-extrabold'
             />
-            <p className='text-sm text-gray-600'>
+            <p className='text-lg lg:text-xl text-gray-600'>
               Explore our curated collection of cutting-edge tech products for
               your home, office, and on-the-go needs.
             </p>
             <Link to='/products'>
-              <button className='rounded-md bg-black text-white py-3 px-6 w-fit text-xs font-semibold'>
+              <button className='rounded-md bg-black text-white py-3 px-6 w-fit text-lg font-semibold'>
                 Shop Now
               </button>
             </Link>
           </div>
-          <div id='image' className='w-full max-w-xs lg:max-w-sm'>
+          <div id='image' className='w-full  lg:max-w-xl'>
             <img
               src='https://img.freepik.com/premium-photo/order-online-shopping-customer-with-gift-mobile-pay-with-credit-card-isolated-white-background_1262710-35753.jpg?ga=GA1.1.1950963813.1721542835&semt=ais_hybrid'
               alt='image'
@@ -45,32 +45,40 @@ export const HomePage = () => {
         </div>
 
         {/* Category Section */}
-        <div className='flex flex-col text-center mb-12'>
-          <Heading text='Featured Category' className='text-2xl' />
-          <div
-            id='cards'
-            className='flex  justify-center items-center gap-10 mt-4'
-          >
-            {Object.keys(category).map((data) => {
-              return (
-                <Card
-                  title={data}
-                  content={category[data].description}
-                  imgSrc={category[data].imageUrl}
-                  isBtn={false}
-                  isCategory={true}
-                  key={data}
-                />
-              );
-            })}
+        <div className='max-w-screen px-6 mt-6'>
+          <div className='flex flex-col text-center mb-12 '>
+            <Heading
+              text='Featured Category'
+              className='text-3xl lg:text-4xl lg:font-bold'
+            />
+            <div
+              id='cards'
+              className='flex justify-center items-center gap-8 mt-4 flex-wrap'
+            >
+              {Object.keys(category).map((data) => {
+                return (
+                  <Card
+                    title={data}
+                    content={category[data].description}
+                    imgSrc={category[data].imageUrl}
+                    isBtn={false}
+                    isCategory={true}
+                    key={data}
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
 
         {/* Product Section */}
 
-        <div className=' bg-gray-100'>
+        <div className=' bg-gray-100 '>
           <div className='flex flex-col text-center'>
-            <Heading text='Featured Products' className='text-2xl mt-8' />
+            <Heading
+              text='Featured Products'
+              className='text-3xl lg:text-4xl lg:font-bold my-6'
+            />
             <div
               id='cards'
               className='flex flex-wrap justify-center items-center gap-10 mt-4 mb-8'

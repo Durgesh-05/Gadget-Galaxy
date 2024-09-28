@@ -3,7 +3,7 @@ import React from 'react';
 export const InputBox = ({ text, placeholder, label, value, setValue }) => {
   return (
     <div>
-      <label htmlFor={text} className='text-xs font-semibold'>
+      <label htmlFor={text} className='font-semibold text-lg md:text-base'>
         {label}
       </label>
       <input
@@ -15,7 +15,7 @@ export const InputBox = ({ text, placeholder, label, value, setValue }) => {
         placeholder={placeholder}
         required
         value={value}
-        className='border border-gray-300 rounded-md w-full py-1 px-1 placeholder:px-1 placeholder:text-xs text-xs'
+        className='border border-gray-300 rounded-md w-full h-10 py-4 px-2 md:h-12 md:py-4'
         onChange={(event) => setValue(event.target.value)}
       />
     </div>

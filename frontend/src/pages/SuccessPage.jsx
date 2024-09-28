@@ -5,12 +5,14 @@ import { CartContext } from '../context/CartContext';
 import { getOrderItem, getTotalAmount, url } from '../utils';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 export const SuccessPage = () => {
   const location = useLocation();
   const { productInCart, setProductInCart } = useContext(CartContext);
   const query = new URLSearchParams(location.search);
   const sessionId = query.get('session_id');
+  const { token } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,7 +29,9 @@ export const SuccessPage = () => {
 
         try {
           const res = await axios.post(`${url}/api/v1/order`, orderObject, {
-            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           });
           if (res.status === 201) {
             toast.success('Congratulations! Payment Success & Order Created', {

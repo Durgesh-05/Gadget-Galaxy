@@ -4,17 +4,21 @@ import { Footer } from '../components/Footer';
 import axios from 'axios';
 import { url } from '../utils';
 import { Heading } from '../components/Heading';
+import { useAuth } from '../context/AuthContext';
 
 export const ProfilePage = () => {
   const [userData, setUserData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState({});
+  const { token } = useAuth();
 
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
         const res = await axios.get(`${url}/api/v1/profile`, {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         const { data } = res.data;
         setUserData(data);
@@ -42,7 +46,9 @@ export const ProfilePage = () => {
   const handleSaveClick = async () => {
     try {
       const res = await axios.patch(`${url}/api/v1/profile`, editedData, {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       setUserData(editedData);
       setIsEditing(false);

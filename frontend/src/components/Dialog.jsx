@@ -3,11 +3,12 @@ import { IoMdClose } from 'react-icons/io';
 import { handleCashOnDelivery, handleCheckout } from '../utils';
 import { CartContext } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export const DialogBox = ({ onClose, totalAmount }) => {
   const { productInCart, setProductInCart } = useContext(CartContext);
   const navigate = useNavigate();
-
+  const { token } = useAuth();
   return (
     <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm transition duration-300 ease-in-out border-gray-300'>
       <div className='bg-white shadow-lg border border-gray-300 p-8 w-fit flex flex-col justify-center items-center font-inter relative rounded-lg transform transition-transform duration-300 ease-in-out scale-95 hover:scale-100'>
@@ -26,7 +27,8 @@ export const DialogBox = ({ onClose, totalAmount }) => {
                 productInCart,
                 totalAmount,
                 navigate,
-                setProductInCart
+                setProductInCart,
+                token
               )
             }
           >

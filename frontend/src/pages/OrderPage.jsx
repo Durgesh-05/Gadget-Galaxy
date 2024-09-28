@@ -10,13 +10,15 @@ import { Footer } from '../components/Footer';
 export const OrderPage = () => {
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, token } = useAuth();
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
         const res = await axios.get(`${url}/api/v1/order`, {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
 
         setOrders(res.data.data);

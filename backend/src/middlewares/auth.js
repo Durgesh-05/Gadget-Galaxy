@@ -15,7 +15,9 @@ const verifyRoles = (roles = []) =>
   });
 
 const validateToken = asyncHandler(async (req, res, next) => {
-  const token = req.cookies['accessToken'];
+  const token =
+    req.headers['authorization']?.replace('Bearer ', '') ||
+    req.cookies?.accessToken;
   if (!token) {
     return res
       .status(401)

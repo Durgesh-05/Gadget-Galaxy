@@ -56,10 +56,12 @@ export const initialCategories = {
   },
 };
 
-export const fetchProfileData = async () => {
+export const fetchProfileData = async (token) => {
   try {
     const res = await axios.get(`${url}/api/v1/profile`, {
-      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     const { data } = res.data;
     return data;
@@ -73,7 +75,8 @@ export const handleCashOnDelivery = async (
   productInCart,
   totalAmount,
   navigate,
-  setProductInCart
+  setProductInCart,
+  token
 ) => {
   const orderItem = getOrderItem(productInCart);
   const orderObject = {
@@ -87,7 +90,9 @@ export const handleCashOnDelivery = async (
       toast.warning('Update Address Details', { autoClose: 1000 });
     }
     const res = await axios.post(`${url}/api/v1/order`, orderObject, {
-      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     if (res.status === 201) {
       toast.success('Congratulations! Order Created', { autoClose: 1000 });

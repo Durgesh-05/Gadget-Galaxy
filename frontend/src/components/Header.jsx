@@ -10,13 +10,15 @@ import { useAuth } from '../context/AuthContext';
 export const Header = () => {
   const [dropdownOpen, setDropDownOpen] = useState(false);
   const { productInCart } = useContext(CartContext);
-  const { logout, isAuthenticated } = useAuth();
+  const { logout, isAuthenticated, token } = useAuth();
   const [productCountInCart, setproductCountInCart] = useState(0);
   const navigate = useNavigate();
   const handleUserLogout = async () => {
     try {
       const res = await axios.get(`${url}/api/v1/user/logout`, {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       if (res.status === 200) {
         logout();

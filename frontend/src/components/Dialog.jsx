@@ -7,18 +7,20 @@ import { useNavigate } from 'react-router-dom';
 export const DialogBox = ({ onClose, totalAmount }) => {
   const { productInCart, setProductInCart } = useContext(CartContext);
   const navigate = useNavigate();
+
   return (
-    <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
-      <div className='bg-gray-100 shadow-lg border border-gray-500 p-8 w-fit  flex flex-col justify-center items-center font-inter relative rounded-lg'>
+    <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm transition duration-300 ease-in-out border-gray-300'>
+      <div className='bg-white shadow-lg border border-gray-300 p-8 w-fit flex flex-col justify-center items-center font-inter relative rounded-lg transform transition-transform duration-300 ease-in-out scale-95 hover:scale-100'>
         <button
-          className='absolute text-lg top-2 right-4 py-2 px-4 text-gray-800 text-center rounded-lg '
+          className='absolute text-lg top-2 right-4 p-2 text-gray-600 rounded-full hover:bg-gray-200 transition'
           onClick={onClose}
         >
           <IoMdClose />
         </button>
+        <h2 className='text-2xl font-bold mb-4'>Checkout Options</h2>
         <div id='btns' className='flex gap-4 mt-4'>
           <button
-            className='text-lg font-semibold bg-gray-950 py-3 px-5 rounded-lg text-white text-center hover:bg-gray-800 hover:cursor-pointer'
+            className='text-lg font-semibold bg-blue-600 py-3 px-5 rounded-lg text-white transition-all duration-300 hover:bg-blue-700'
             onClick={() =>
               handleCashOnDelivery(
                 productInCart,
@@ -31,7 +33,7 @@ export const DialogBox = ({ onClose, totalAmount }) => {
             Cash on Delivery
           </button>
           <button
-            className='text-lg font-semibold bg-gray-950 py-3 px-5 rounded-lg text-white text-center hover:bg-gray-800 hover:cursor-pointer'
+            className='text-lg font-semibold bg-green-600 py-3 px-5 rounded-lg text-white transition-all duration-300 hover:bg-green-700'
             onClick={() => handleCheckout(productInCart)}
           >
             Online Payment

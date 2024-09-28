@@ -69,7 +69,10 @@ export const ProductDetailPage = () => {
             id='content'
             className='flex flex-col gap-4 mx-4 lg:mx-0 lg:w-1/2'
           >
-            <Heading text={productDetail.productName} className='text-3xl' />
+            <Heading
+              text={productDetail.productName}
+              className='text-3xl md:text-5xl md:font-semibold'
+            />
             <div className='flex gap-2 items-center'>
               <p className='text-4xl text-gray-950 font-bold'>
                 ${productDetail.price}
@@ -99,11 +102,11 @@ export const ProductDetailPage = () => {
               id='product-details'
               className='flex flex-col gap-4 text-sm mt-4'
             >
-              <h3 className='text-2xl text-gray-950 font-medium lg:text-3xl'>
+              <h3 className='text-2xl text-gray-950 font-semibold lg:text-3xl'>
                 Product Details
               </h3>
               <div className='flex flex-col gap-2'>
-                <p className='text-gray-600'>
+                <p className='text-gray-600 text-[16px]'>
                   {productDetail.productDescription}
                 </p>
               </div>
@@ -113,7 +116,7 @@ export const ProductDetailPage = () => {
             {isAuthenticated() && (
               <div id='reviews' className='mb-4'>
                 <form className='flex flex-col gap-2' onSubmit={submitHandler}>
-                  <label htmlFor='reviewText' className='text-sm font-semibold'>
+                  <label htmlFor='reviewText' className='text-lg font-semibold'>
                     Write your review
                   </label>
                   <textarea
@@ -124,7 +127,7 @@ export const ProductDetailPage = () => {
                     onChange={(e) => setReview(e.target.value)}
                   ></textarea>
                   <button
-                    className='rounded-md w-full lg:w-fit bg-black text-white py-2 px-8 text-xs font-semibold'
+                    className='rounded-md w-full lg:w-fit bg-black text-white py-3 px-8 text-md font-semibold'
                     type='submit'
                   >
                     Submit

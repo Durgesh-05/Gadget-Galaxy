@@ -12,11 +12,17 @@ export const Footer = () => {
           <FaFacebookF className='text-lg' />
           <span className='sr-only'>Facebook</span>
         </Link>
-        <Link to='#' className='text-muted-foreground hover:text-foreground'>
+        <Link
+          to='https://x.com/d_dubey18'
+          className='text-muted-foreground hover:text-foreground'
+        >
           <FaTwitter className='text-lg' />
           <span className='sr-only'>Twitter</span>
         </Link>
-        <Link to='#' className='text-muted-foreground hover:text-foreground'>
+        <Link
+          to='https://www.instagram.com/wsr_durgesh/'
+          className='text-muted-foreground hover:text-foreground'
+        >
           <FaInstagram className='text-lg' />
           <span className='sr-only'>Instagram</span>
         </Link>

@@ -57,35 +57,37 @@ export const OrderPage = () => {
     <div className='font-inter'>
       <Header />
       <div className='min-h-screen bg-white pt-16'>
-        <div className='container mx-auto'>
-          <h1 className='text-3xl font-bold text-gray-950 text-center mb-8'>
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
+          <h1 className='text-3xl sm:text-4xl font-bold text-gray-950 text-center my-8'>
             Order Details
           </h1>
           {orders.map((order) => (
             <div
               key={order._id}
-              className='bg-white text-black shadow-xl border border-gray-400 rounded-lg p-6 mb-8'
+              className='bg-white text-black shadow-xl border border-gray-400 rounded-lg p-4 sm:p-6 mb-8'
             >
-              <div className='flex justify-between items-center border-b border-gray-300 pb-4 mb-4'>
+              <div className='flex justify-between items-center border-b border-gray-300 pb-2 sm:pb-4 mb-4'>
                 <div>
-                  <h2 className='text-xl font-semibold'>
+                  <h2 className='text-lg sm:text-xl font-semibold'>
                     Order ID: {order._id}
                   </h2>
-                  <p className='text-gray-600'>
+                  <p className='text-gray-600 text-sm sm:text-base'>
                     Placed on: {formatDate(order.createdAt)}
                   </p>
-                  <p className='text-gray-600'>
+                  <p className='text-gray-600 text-sm sm:text-base'>
                     Payment Type: {order.paymentType}
                   </p>
-                  <p className='text-gray-600'>
+                  <p className='text-gray-600 text-sm sm:text-base'>
                     Order Status: {order.orderStatus}
                   </p>
-                  <p className='text-gray-600'>
+                  <p className='text-gray-600 text-sm sm:text-base'>
                     Payment Status: {order.paymentStatus}
                   </p>
                 </div>
                 <div className='text-right'>
-                  <p className='text-lg font-bold'>${order.orderPrice}</p>
+                  <p className='text-lg sm:text-xl font-bold'>
+                    ${order.orderPrice}
+                  </p>
                 </div>
               </div>
               {order.orderItem.map((item, index) => (
@@ -95,24 +97,30 @@ export const OrderPage = () => {
                     index < order.orderItem.length - 1
                       ? 'border-b border-gray-300'
                       : ''
-                  } pb-4 mb-4`}
+                  } pb-2 sm:pb-4 mb-4`}
                 >
                   <div className='flex items-center'>
                     <img
                       src={item.productId.productImageURL}
                       alt={item.productId.productName}
-                      className='w-20 h-20 object-cover rounded-lg mr-4'
+                      className='w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg mr-4'
                     />
                     <div>
-                      <h3 className='text-lg font-semibold'>
+                      <h3 className='text-base sm:text-lg font-semibold'>
                         {item.productId.productName}
                       </h3>
-                      <p className='text-gray-600'>{item.productId.category}</p>
-                      <p className='text-gray-600'>Quantity: {item.quantity}</p>
+                      <p className='text-gray-600 text-sm sm:text-base'>
+                        {item.productId.category}
+                      </p>
+                      <p className='text-gray-600 text-sm sm:text-base'>
+                        Quantity: {item.quantity}
+                      </p>
                     </div>
                   </div>
                   <div className='text-right'>
-                    <p className='text-lg font-bold'>${item.productId.price}</p>
+                    <p className='text-lg sm:text-xl font-bold'>
+                      ${item.productId.price}
+                    </p>
                   </div>
                 </div>
               ))}

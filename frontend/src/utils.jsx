@@ -6,6 +6,7 @@ import { loadStripe } from '@stripe/stripe-js';
 export const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_SECRET);
 
 export const url = 'https://gadget-galaxy-mbwk.onrender.com';
+// export const url = 'http://localhost:8000';
 
 export const initCartObject = (
   productId,
@@ -85,10 +86,11 @@ export const handleCashOnDelivery = async (
   };
 
   try {
-    const profileData = await fetchProfileData();
+    const profileData = await fetchProfileData(token);
     if (profileData.address.trim() === '') {
       toast.warning('Update Address Details', { autoClose: 1000 });
     }
+
     const res = await axios.post(`${url}/api/v1/order`, orderObject, {
       headers: {
         Authorization: `Bearer ${token}`,

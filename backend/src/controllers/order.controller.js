@@ -6,11 +6,14 @@ const handleGetOrders = asyncHandler(async (req, res) => {
   const { _id } = req.user;
 
   try {
-    const orders = await Order.find({ createdBy: _id }).populate({
-      path: 'orderItem.productId',
-      model: 'Product',
-    });
-    if (!orders) {
+    const orders = await Order.find({ createdBy: _id })
+      .populate({
+        path: 'orderItem.productId',
+        model: 'Product',
+      })
+      .sort({ createdAt: -1 });
+
+    if (!orders || orders.length === 0) {
       return res
         .status(200)
         .json(new ApiResponse(200, null, 'No order is created yet!'));
@@ -25,6 +28,7 @@ const handleGetOrders = asyncHandler(async (req, res) => {
       .json(new ApiResponse(500, null, 'Internal Server Error'));
   }
 });
+
 const handleAddOrders = asyncHandler(async (req, res) => {
   const orderDetails = req.body;
 

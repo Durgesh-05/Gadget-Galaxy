@@ -36,7 +36,7 @@ export const DialogBox = ({ onClose, totalAmount }) => {
           </button>
           <button
             className='text-lg font-semibold bg-green-600 py-3 px-5 rounded-lg text-white transition-all duration-300 hover:bg-green-700'
-            onClick={() => handleCheckout(productInCart)}
+            onClick={() => handleCheckout(productInCart, token)}
           >
             Online Payment
           </button>

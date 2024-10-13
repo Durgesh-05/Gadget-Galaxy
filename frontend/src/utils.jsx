@@ -89,6 +89,7 @@ export const handleCashOnDelivery = async (
     const profileData = await fetchProfileData(token);
     if (profileData.address.trim() === '') {
       toast.warning('Update Address Details', { autoClose: 1000 });
+      return;
     }
 
     const res = await axios.post(`${url}/api/v1/order`, orderObject, {
@@ -107,12 +108,17 @@ export const handleCashOnDelivery = async (
   }
 };
 
-export const handleCheckout = async (productInCart) => {
+export const handleCheckout = async (productInCart, token) => {
   const products = productInCart.map((product) => {
     const { productName, productPrice, count, productId } = product;
     return { productName, price: productPrice, quantity: count, productId };
   });
   try {
+    const profileData = await fetchProfileData(token);
+    if (profileData.address.trim() === '') {
+      toast.warning('Update Address Details', { autoClose: 1000 });
+      return;
+    }
     const response = await axios.post(`${url}/api/v1/payment/session`, {
       products,
     });

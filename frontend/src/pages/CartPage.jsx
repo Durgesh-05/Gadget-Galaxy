@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
@@ -7,12 +7,19 @@ import { CartContext } from '../context/CartContext';
 import { FrownIcon } from './NotFoundPage';
 import { ProductContext } from '../context/ProductContext';
 import { DialogBox } from '../components/Dialog';
+import { SkeletonCartCard } from '../components/SkeletonCard';
 
 export const CartPage = () => {
   const { productInCart, incrementHandler, decrementHandler, removeFromCart } =
     useContext(CartContext);
   const { productData } = useContext(ProductContext);
   const [isDialogOpen, setDialogOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    if (productInCart.length > 0) {
+      setLoading(false);
+    }
+  }, [productInCart.length]);
 
   const subtotal = productInCart.reduce(
     (total, product) => total + product.productPrice * product.count,
@@ -43,7 +50,34 @@ export const CartPage = () => {
   return (
     <div className='font-inter'>
       <Header />
-      {productInCart.length > 0 ? (
+      {loading && productInCart.length !== 0 ? (
+        <main className='min-h-screen pt-16'>
+          <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 px-6'>
+            <div className='lg:col-span-2'>
+              <div
+                id='cards'
+                className='grid grid-cols-1 lg:grid-cols-2 gap-4 mt-12'
+              >
+                {[...Array(4)].map((_, index) => (
+                  <SkeletonCartCard key={index} />
+                ))}
+              </div>
+            </div>
+            <div className='lg:col-span-1 mt-12'>
+              <div className='bg-gray-100 p-6 rounded-lg'>
+                <h2 className='text-2xl font-bold mb-4'>Order Summary</h2>
+                <div className='grid gap-4'>
+                  <div className='w-full h-6 bg-gray-200 rounded-md'></div>
+                  <div className='w-full h-6 bg-gray-200 rounded-md'></div>
+                  <div className='w-full h-6 bg-gray-200 rounded-md'></div>
+                  <div className='w-full h-10 bg-gray-200 rounded-md'></div>
+                  <div className='w-full h-12 bg-gray-200 rounded-md'></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      ) : productInCart.length > 0 ? (
         <main className='min-h-screen pt-16'>
           <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 px-6'>
             <div className='lg:col-span-2'>
@@ -59,7 +93,6 @@ export const CartPage = () => {
                     productImage,
                     productId,
                   }) => {
-                    if (productName === '') return;
                     const stockCount = getStockOfProduct(productId);
                     return (
                       <CartCard

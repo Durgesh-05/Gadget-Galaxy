@@ -57,20 +57,34 @@ export const Header = () => {
         >
           Products
         </NavLink>
-        <div className='relative'>
-          <NavLink to='/cart'>
-            <FaShoppingCart
-              className={({ isActive }) =>
-                `text-md hover:text-gray-400 ${isActive ? 'text-gray-400' : ''}`
-              }
-            />
-          </NavLink>
-          {productCountInCart > 0 && (
-            <span className='absolute top-[-10px] right-[-7px] bg-black text-white text-[7px] rounded-full p-[2px]'>
-              {isAuthenticated() && productCountInCart}
-            </span>
-          )}
-        </div>
+        <NavLink
+          to='/login'
+          className={({ isActive }) =>
+            `hover:bg-gray-100 text-md font-semibold border px-6 py-2 rounded-lg bg-white text-gray-950 ${
+              isAuthenticated() ? 'hidden' : ''
+            } ${isActive ? 'text-gray-400' : ''}`
+          }
+        >
+          Login
+        </NavLink>
+        {isAuthenticated() && (
+          <div className='relative'>
+            <NavLink to='/cart'>
+              <FaShoppingCart
+                className={({ isActive }) =>
+                  `text-md hover:text-gray-400 ${
+                    isActive ? 'text-gray-400' : ''
+                  }`
+                }
+              />
+            </NavLink>
+            {productCountInCart > 0 && (
+              <span className='absolute top-[-10px] right-[-7px] bg-black text-white text-[9px] rounded-full p-[2px]'>
+                {isAuthenticated() && productCountInCart}
+              </span>
+            )}
+          </div>
+        )}
         {isAuthenticated() && (
           <div className='relative'>
             <button

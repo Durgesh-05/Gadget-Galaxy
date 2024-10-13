@@ -7,9 +7,7 @@ export const ProtectedRoutes = () => {
 
   if (isLoading) {
     return (
-      <div className=' h-screen w-screen flex justify-center items-center'>
-        <p className='font-bold text-4xl font-inter'>Loading...</p>
-      </div>
+      <div className=' h-screen w-screen flex justify-center items-center'></div>
     );
   }
 

@@ -20,7 +20,6 @@ export const Card = ({
       return toast.error('Authentication Required', { autoClose: 1000 });
     const cartObject = initCartObject(productId, title, imgSrc, price);
     addToCart(cartObject);
-    toast.success('Product is added to Cart', { autoClose: 1000 });
   };
   return isCategory ? (
     <div className='w-60 bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-transform duration-300 transform hover:scale-105 md:h-80 md:w-80 p-4 flex flex-col justify-between hover:cursor-pointer border border-gray-200'>

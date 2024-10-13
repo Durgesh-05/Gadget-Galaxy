@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+} from 'react';
 
 const AuthContext = createContext();
 
@@ -27,7 +33,9 @@ export const AuthContextProvider = ({ children }) => {
     setIsLoading(false);
   }, [token]);
 
-  const isAuthenticated = () => !!token;
+  const isAuthenticated = useMemo(() => {
+    return () => !!token;
+  }, [token]);
   const value = {
     user,
     setUser,
